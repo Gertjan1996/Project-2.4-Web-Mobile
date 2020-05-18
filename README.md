@@ -2,9 +2,9 @@
 Repo voor het groepsproject van groep E.15 
 
 Groep E.15:
-Gertjan Haan
-Jun Lin
-Stephan Roffel
+Gertjan Haan, 
+Jun Lin, 
+Stephan Roffel, 
 Hessel van der Heide
 
 Projectdoel:
