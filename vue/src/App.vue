@@ -1,32 +1,62 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+  <div class="globalcontainer">
+    <nav class="globalheader">
+      <Navigation />
+    </nav>
+    <main class="globalmain">
+      <div v-if="alert.message" :class="`alert ${alert.type}`">
+        {{ alert.message }}
+      </div>
+      <router-view />
+    </main>
   </div>
 </template>
 
+<script>
+import Navigation from "./components/Navigation";
+
+export default {
+  name: "App",
+  components: {
+    Navigation
+  },
+  computed: {
+    alert() {
+      return this.$store.state.alert;
+    }
+  },
+  /* eslint-disable no-unused-vars */
+  watch: {
+    $route(to, from) {
+      this.$store.dispatch("alert/clear");
+    }
+  }
+  /* eslint-enable no-unused-vars */
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.globalcontainer {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main";
+  grid-template-columns: auto;
+  grid-template-rows: 100px auto;
+  min-height: 100%;
+}
+
+.globalheader {
+  background-color: orange;
+  grid-area: header;
+  text-align: center;
+}
+
+.globalmain {
+  background-color: #ffffff;
+  grid-area: main;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
   padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
