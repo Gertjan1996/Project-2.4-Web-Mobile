@@ -13,16 +13,17 @@ export const auth = {
     login({ dispatch, commit }, { username, password }) {
       commit("loginRequest");
       const body = {
-        grant_type: "password",
+        // grant_type: "password",
         username: username,
         password: password,
-        client_id: "aaabbbcccdddeeefff" // TODO: Add right client_id
+        // client_id: "aaabbbcccdddeeefff" // TODO: Add right client_id
       };
       delete axios.defaults.headers.common.Authorization;
       axios
-        .post("/token", body)
+        .post("/users/authenticate", body)
         .then(response => {
-          token = response.data.access_token;
+          console.log(response)
+          token = response.data.token;
           console.log("Response OK, token: " + token);
           localStorage.setItem("token", token);
           axios.defaults.headers.common.Authorization = "Bearer " + token;
@@ -30,6 +31,7 @@ export const auth = {
           router.push("/");
         })
         .catch(error => {
+          console.log(error)
           commit("loginFailure");
           localStorage.removeItem("token");
           if (error.response.status === 400) {

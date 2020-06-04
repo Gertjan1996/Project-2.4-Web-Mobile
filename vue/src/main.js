@@ -8,7 +8,7 @@ import store from "./store";
 Vue.config.productionTip = false;
 
 Vue.prototype.$http = Axios;
-Vue.prototype.$http.defaults.baseURL = "https://localhost/api"; // TODO: Add right link to API
+Vue.prototype.$http.defaults.baseURL = "http://localhost:4000"; // TODO: Add right link to API
 Vue.prototype.$http.defaults.headers.common.Accept = "application/json";
 Vue.prototype.$http.defaults.headers.common["Accept-language"] = "nl";
 Vue.prototype.$http.defaults.headers.post["Content-Type"] = "application/json";
