@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ForumApplication</string>
+    <string name="logo">Logo</string>
+    <string name="Gebruiksnaam">Gebruiksnaam</string>
+    <string name="Wachtwoord">Wachtwoord</string>
+    <string name="Gebruiksnaam_hint">Type uw gebruiksnaam in</string>
+    <string name="Wachtwoord_hint">Type uw wachtwoord in</string>
+    <string name="Login">Log in</string>
+</resources>
