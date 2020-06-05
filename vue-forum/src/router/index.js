@@ -11,7 +11,17 @@ const routes = [
     component: Home
   },
   {
-    path: '/categorie',
+    path: '/categories',
+    name: 'Categorieen',
+    component: () => import('../views/Categories.vue')
+  },
+  {
+    path: '/categorie/new',
+    name: 'CreateCategory',
+    component: () => import('../views/CreateCategory.vue')
+  },
+  {
+    path: '/categorie/:id',
     name: 'Category',
     component: () => import('../views/Category.vue')
   },

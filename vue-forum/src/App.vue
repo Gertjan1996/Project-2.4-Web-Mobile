@@ -12,7 +12,6 @@
           v-for="item in menuItems"
           :key="item.title"
           link
-          router
           :to="item.link"
         >
           <v-list-item-action>
@@ -55,7 +54,6 @@
           v-for="item in menuItems"
           :key="item.title"
           text
-          router
           :to="item.link"
         >
           <v-icon left>
@@ -86,6 +84,7 @@ export default {
   data: () => ({
     drawer: null,
     menuItems: [
+      { icon: 'mdi-forum', title: 'Forum', link: '/categories' },
       { icon: 'mdi-face', title: 'Profiel', link: '/profiel' },
       { icon: 'mdi-account-multiple-plus', title: 'Registreren', link: '/registreren' },
       { icon: 'mdi-login', title: 'Inloggen', link: '/login' }

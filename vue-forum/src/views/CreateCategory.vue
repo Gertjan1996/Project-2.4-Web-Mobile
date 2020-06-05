@@ -7,11 +7,8 @@
       align="center"
       justify="center"
     >
-      <v-col align="center">
-        <v-card>
-          <v-card-title>Categorie Voetbal</v-card-title>
-          <p>Categorie pagina voor voetbal</p>
-        </v-card>
+      <v-col class="shrink">
+        <p>>Pagina voor aanmaken categorie</p>
       </v-col>
     </v-row>
   </v-container>
@@ -19,6 +16,6 @@
 
 <script>
 export default {
-  name: 'Category'
+  name: 'CreateCategory'
 }
 </script>
