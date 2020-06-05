@@ -17,6 +17,7 @@
         <v-card
           router
           :to="category.link"
+          class="elevation-6"
         >
           <v-list-item>
             <v-list-item-avatar color="grey"></v-list-item-avatar>
