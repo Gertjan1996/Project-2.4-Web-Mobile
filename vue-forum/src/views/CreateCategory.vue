@@ -8,7 +8,7 @@
       justify="center"
     >
       <v-col class="shrink">
-        <p>>Pagina voor forumposts (zie mock-ups voor design)</p>
+        <p>>Pagina voor aanmaken categorie</p>
       </v-col>
     </v-row>
   </v-container>
@@ -16,6 +16,6 @@
 
 <script>
 export default {
-  name: 'Post'
+  name: 'CreateCategory'
 }
 </script>

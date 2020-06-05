@@ -7,13 +7,33 @@
       justify="center"
     >
       <v-col
+        v-for="category in categories"
+        :key="category.sport"
         align="center"
         cols="6"
         md="4"
         lg="3"
       >
-        <p>Welkom op het sportforum, hier kunt u terecht voor discussies over elke sport!</p>
-        <p><i>Om berichten te posten, heeft u een account nodig</i></p>
+        <v-card
+          :to="category.link"
+          class="elevation-6"
+        >
+          <v-list-item>
+            <v-list-item-avatar color="grey"></v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title class="headline">{{ category.sport }}</v-list-item-title>
+              <v-list-item-subtitle class="hidden-xs-only">Subforum voor '{{ category.sport }}'</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-img
+            :src="require('../assets/logo.svg')"
+            contain
+            height="200"
+          />
+          <v-card-text>
+            Bekijk en bespreek hier de laatste ontwikkelingen op het gebied van '{{ category.sport }}'.
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -21,7 +41,7 @@
 
 <script>
 export default {
-  name: 'Home',
+  name: 'Categories',
   data: () => ({
     categories: [
       { sport: 'Fitness', link: '/categorie' },
