@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">ForumApplication</string>
+    <!-- Login.xml-->
     <string name="logo">Logo</string>
     <string name="Gebruiksnaam">Gebruiksnaam</string>
     <string name="Wachtwoord">Wachtwoord</string>
     <string name="Gebruiksnaam_hint">Type uw gebruiksnaam in</string>
     <string name="Wachtwoord_hint">Type uw wachtwoord in</string>
     <string name="Login">Log in</string>
+    <!-- Registrate.xml-->
+    <string name="Registeren">Registreren</string>
+    <string name="Registeren_emailadress">Emailadress</string>
+    <string name="Registeren_wachtwoord">Wachtwoord</string>
+    <string name="Registeren_confire_wachtwoord">herhaal uw wachtwoord</string>
 </resources>
