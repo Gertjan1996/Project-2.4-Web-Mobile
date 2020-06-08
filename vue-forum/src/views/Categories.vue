@@ -15,14 +15,18 @@
         lg="3"
       >
         <v-card
-          :to="category.link"
           class="elevation-6"
+          @click="onLoadCategory(category.id)"
         >
           <v-list-item>
-            <v-list-item-avatar color="grey"></v-list-item-avatar>
+            <v-list-item-avatar color="grey" />
             <v-list-item-content>
-              <v-list-item-title class="headline">{{ category.sport }}</v-list-item-title>
-              <v-list-item-subtitle class="hidden-xs-only">Subforum voor '{{ category.sport }}'</v-list-item-subtitle>
+              <v-list-item-title class="headline">
+                {{ category.sport }}
+              </v-list-item-title>
+              <v-list-item-subtitle class="hidden-xs-only">
+                Subforum voor '{{ category.sport }}'
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-img
@@ -42,21 +46,15 @@
 <script>
 export default {
   name: 'Categories',
-  data: () => ({
-    categories: [
-      { sport: 'Fitness', link: '/categorie' },
-      { sport: 'Hardlopen', link: '/categorie' },
-      { sport: 'Voetbal', link: '/categorie' },
-      { sport: 'Zwemmen', link: '/categorie' },
-      { sport: 'Tennis', link: '/categorie' },
-      { sport: 'Fietsen', link: '/categorie' },
-      { sport: 'Yoga', link: '/categorie' },
-      { sport: 'Hockey', link: '/categorie' },
-      { sport: 'Paardrijden', link: '/categorie' },
-      { sport: 'Golf', link: '/categorie' },
-      { sport: 'Wielrennen', link: '/categorie' },
-      { sport: 'Overig', link: '/categorie' }
-    ]
-  })
+  computed: {
+    categories () {
+      return this.$store.getters.loadedCategories
+    }
+  },
+  methods: {
+    onLoadCategory (id) {
+      this.$router.push('/categories/' + id)
+    }
+  }
 }
 </script>
