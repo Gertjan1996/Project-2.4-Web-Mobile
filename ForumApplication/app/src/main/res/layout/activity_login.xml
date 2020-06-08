@@ -10,94 +10,88 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="335dp"
-        android:layout_height="185dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginBottom="116dp"
-        app:layout_constraintBottom_toTopOf="@+id/wachtwoord"
+        android:layout_width="359dp"
+        android:layout_height="204dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="55dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-
     <TextView
         android:id="@+id/textView"
-        android:layout_width="108dp"
-        android:layout_height="23dp"
-        android:layout_marginBottom="315dp"
+        android:layout_width="147dp"
+        android:layout_height="25dp"
         android:text="@string/Gebruiksnaam"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintBottom_toTopOf="@+id/gebruiksnaam"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="334dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="296dp"
+        android:id="@+id/gebruiksnaam"
+        android:layout_width="333dp"
+        android:layout_height="45dp"
         android:background="@drawable/border"
         android:hint="@string/Gebruiksnaam_hint"
+        android:inputType="textWebEmailAddress"
         android:padding="5dip"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/wachtwoord"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/wachtwoord"
-        android:layout_width="106dp"
-        android:layout_height="20dp"
-        android:layout_marginBottom="251dp"
+        android:layout_width="147dp"
+        android:layout_height="25dp"
         android:text="@string/Wachtwoord"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintBottom_toTopOf="@+id/type_wachtwoord"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/type_wachtwoord"
-        android:layout_width="330dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="482dp"
-        android:layout_marginBottom="46dp"
+        android:layout_width="333dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/border"
         android:hint="@string/Wachtwoord_hint"
+        android:inputType="textPassword"
         android:padding="5dip"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton"
+        app:layout_constraintBottom_toTopOf="@+id/LoginButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/imageButton"
+        android:id="@+id/LoginButton"
         android:layout_width="153dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="116dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/border_button"
+        android:fontFamily="@font/sen_bold"
         android:text="@string/Login"
         android:textColor="@color/transparent"
         android:textSize="15dp"
-        android:fontFamily="@font/sen_bold"
-        android:background="@drawable/border_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/type_wachtwoord" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:layout_width="273dp"
+        android:id="@+id/textView3"
+        android:layout_width="302dp"
         android:layout_height="32dp"
+        android:layout_marginBottom="140dp"
         android:fontFamily="@font/sen_bold"
+        android:onClick="Registeren"
         android:text="Nog geen account?Registeer gelijk een!"
         android:textColor="@color/blue"
-        android:onClick="Registeren"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton">
+        app:layout_constraintHorizontal_bias="0.642"
+        app:layout_constraintStart_toStartOf="parent">
 
     </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>
