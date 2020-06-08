@@ -21,22 +21,6 @@
 
 <script>
 export default {
-  name: 'Home',
-  data: () => ({
-    categories: [
-      { sport: 'Fitness', link: '/categorie' },
-      { sport: 'Hardlopen', link: '/categorie' },
-      { sport: 'Voetbal', link: '/categorie' },
-      { sport: 'Zwemmen', link: '/categorie' },
-      { sport: 'Tennis', link: '/categorie' },
-      { sport: 'Fietsen', link: '/categorie' },
-      { sport: 'Yoga', link: '/categorie' },
-      { sport: 'Hockey', link: '/categorie' },
-      { sport: 'Paardrijden', link: '/categorie' },
-      { sport: 'Golf', link: '/categorie' },
-      { sport: 'Wielrennen', link: '/categorie' },
-      { sport: 'Overig', link: '/categorie' }
-    ]
-  })
+  name: 'Home'
 }
 </script>
