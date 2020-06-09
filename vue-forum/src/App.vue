@@ -87,7 +87,8 @@ export default {
       { icon: 'mdi-forum', title: 'Forum', link: '/categories' },
       { icon: 'mdi-face', title: 'Profiel', link: '/profiel' },
       { icon: 'mdi-account-multiple-plus', title: 'Registreren', link: '/registreren' },
-      { icon: 'mdi-login', title: 'Inloggen', link: '/login' }
+      { icon: 'mdi-login', title: 'Inloggen', link: '/login' },
+      { icon: 'mdi-plus-box', title: 'Categorie aanmaken', link: '/categorie/new' }
     ]
   })
 }

@@ -23,6 +23,7 @@ const routes = [
   {
     path: '/categories/:id',
     name: 'Category',
+    props: true,
     component: () => import('../views/Category.vue')
   },
   {

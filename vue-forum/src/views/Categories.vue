@@ -16,7 +16,7 @@
       >
         <v-card
           class="elevation-6"
-          @click="onLoadCategory(category.id)"
+          :to="'/categories/' + category.id"
         >
           <v-list-item>
             <v-list-item-avatar color="grey" />
@@ -49,11 +49,6 @@ export default {
   computed: {
     categories () {
       return this.$store.getters.loadedCategories
-    }
-  },
-  methods: {
-    onLoadCategory (id) {
-      this.$router.push('/categories/' + id)
     }
   }
 }

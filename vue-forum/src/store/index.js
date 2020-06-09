@@ -8,62 +8,62 @@ export default new Vuex.Store({
     loadedCategories: [
       {
         sport: 'Fitness',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '1'
       },
       {
         sport: 'Hardlopen',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '2'
       },
       {
         sport: 'Voetbal',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '3'
       },
       {
         sport: 'Zwemmen',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '4'
       },
       {
         sport: 'Tennis',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '5'
       },
       {
         sport: 'Fietsen',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '6'
       },
       {
         sport: 'Yoga',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '7'
       },
       {
         sport: 'Hockey',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '8'
       },
       {
         sport: 'Paardrijden',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '9'
       },
       {
         sport: 'Golf',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '10'
       },
       {
         sport: 'Wielrennen',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '11'
       },
       {
         sport: 'Overig',
-        link: '/categories',
+        imageUrl: '../assets/logo.svg',
         id: '12'
       }
     ],
@@ -73,16 +73,27 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    createCategory (state, payload) {
+      state.loadedCategories.push(payload)
+    }
   },
   actions: {
+    createCategory ({ commit }, payload) {
+      const category = {
+        sport: payload.sport,
+        imageUrl: payload.imageUrl
+      }
+      // TODO: Add to database/ firebase including image upload
+      commit('createCategory', category)
+    }
   },
   getters: {
     loadedCategories (state) {
       return state.loadedCategories.sort((categorieA, categorieB) => {
-        return categorieA.id > categorieB.id // TODO: fix sorting on alphabet
+        return categorieA.sport > categorieB.sport ? 1 : -1
       })
     },
-    loadedCategorie (state) {
+    loadedCategory (state) {
       return (id) => {
         return state.loadedCategories.find((categorie) => {
           return categorie.id === id
