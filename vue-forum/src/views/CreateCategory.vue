@@ -32,6 +32,7 @@
                 name="sport"
                 label="Nieuwe sportcategorie"
                 hint="Dit is hoe de categorie op de homepage weergegeven wordt"
+                required
               />
               <v-text-field
                 id="image-url"
@@ -42,6 +43,7 @@
                 name="imageUrl"
                 label="Image URL"
                 hint="Voer de link naar de afbeelding toe"
+                required
               />
               <v-img
                 :src="imageUrl"

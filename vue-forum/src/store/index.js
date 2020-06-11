@@ -68,7 +68,9 @@ export default new Vuex.Store({
         id: '12'
       }
     ],
-    user: null
+    user: null,
+    loading: false,
+    error: null
   },
   mutations: {
     createCategory (state, payload) {
@@ -76,6 +78,15 @@ export default new Vuex.Store({
     },
     setUser (state, payload) {
       state.user = payload
+    },
+    setLoading (state, payload) {
+      state.loading = payload
+    },
+    setError (state, payload) {
+      state.error = payload
+    },
+    clearError (state) {
+      state.error = null
     }
   },
   actions: {
@@ -89,9 +100,12 @@ export default new Vuex.Store({
       commit('createCategory', category)
     },
     registerUser ({ commit }, payload) {
+      commit('setLoading', true)
+      commit('clearError')
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         .then(
           data => {
+            commit('setLoading', false)
             const newUser = {
               id: data.user.uid,
               username: 'test'
@@ -101,14 +115,19 @@ export default new Vuex.Store({
         )
         .catch(
           error => {
+            commit('setLoading', false)
+            commit('setError', error)
             console.log(error)
           }
         )
     },
     loginUser ({ commit }, payload) {
+      commit('setLoading', true)
+      commit('clearError')
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(
           data => {
+            commit('setLoading', false)
             const loginUser = {
               id: data.user.uid,
               username: 'test'
@@ -118,9 +137,14 @@ export default new Vuex.Store({
         )
         .catch(
           error => {
+            commit('setLoading', false)
+            commit('setError', error)
             console.log(error)
           }
         )
+    },
+    clearError ({ commit }) {
+      commit('clearError')
     }
   },
   getters: {
@@ -138,6 +162,12 @@ export default new Vuex.Store({
     },
     user (state) {
       return state.user
+    },
+    loading (state) {
+      return state.loading
+    },
+    error (state) {
+      return state.error
     }
   },
   modules: {

@@ -13,6 +13,11 @@
         md="6"
         lg="5"
       >
+        <app-alert
+          v-if="error"
+          @dismissed="onDismissed"
+          :text="error.message"
+        />
         <v-card class="elevation-12">
           <v-toolbar
             color="primary"
@@ -32,6 +37,7 @@
                 name="email"
                 label="E-mail"
                 hint="Voer een geldig e-mailadres in"
+                required
               />
               <v-text-field
                 id="username"
@@ -42,6 +48,7 @@
                 name="username"
                 label="Gebruikersnaam"
                 hint="Let op: na registratie niet te wijzigen"
+                required
               />
               <v-text-field
                 id="password"
@@ -55,6 +62,7 @@
                 hint="Let op: minimaal 8 karakters"
                 counter
                 @click:append="showPassword = !showPassword"
+                required
               />
               <v-text-field
                 id="confirmPassword"
@@ -67,15 +75,23 @@
                 label="Wachtwoord bevestigen"
                 hint="De ingevulde wachtwoorden moeten overeen komen"
                 @click:append="showConfirm = !showConfirm"
+                required
               />
             </v-card-text>
             <v-card-actions>
               <v-spacer />
               <v-btn
                 type="submit"
+                :disabled="loading"
+                :loading="loading"
                 color="primary"
               >
                 Registreren
+                <template v-slot:loader>
+                  <span class="custom-loader">
+                    <v-icon light>mdi-cached</v-icon>
+                  </span>
+                </template>
               </v-btn>
             </v-card-actions>
           </v-form>
@@ -106,6 +122,12 @@ export default {
   computed: {
     user () {
       return this.$store.getters.user
+    },
+    error () {
+      return this.$store.getters.error
+    },
+    loading () {
+      return this.$store.getters.loading
     }
   },
   watch: {
@@ -118,6 +140,9 @@ export default {
   methods: {
     onRegister () {
       this.$store.dispatch('registerUser', { email: this.email, password: this.password })
+    },
+    onDismissed () {
+      this.$store.dispatch('clearError')
     }
   }
 }
