@@ -21,42 +21,62 @@
           >
             <v-toolbar-title>Registreren</v-toolbar-title>
           </v-toolbar>
-          <v-card-text>
-            <v-form>
+          <v-form @submit.prevent="onRegister">
+            <v-card-text>
               <v-text-field
+                id="email"
+                v-model="email"
                 label="E-mail"
-                name="mail"
+                name="email"
                 prepend-icon="mdi-mail"
                 type="email"
+                required
               />
               <v-text-field
+                id="username"
+                v-model="username"
                 label="Gebruikersnaam"
                 name="username"
                 prepend-icon="mdi-account"
                 type="text"
+                required
               />
               <v-text-field
                 id="password"
-                label="Wachtwoord"
-                name="password"
+                v-model="password"
                 prepend-icon="mdi-lock"
-                type="password"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required, rules.minimum]"
+                :type="showPassword ? 'text' : 'password'"
+                name="password"
+                label="Wachtwoord"
+                hint="Let op: minimaal 8 karakters"
+                counter
+                @click:append="showPassword = !showPassword"
               />
               <v-text-field
-                id="password2"
-                label="Wachtwoord bevestigen"
-                name="password2"
+                id="confirmPassword"
+                v-model="confirmPassword"
                 prepend-icon="mdi-lock"
-                type="password"
+                :append-icon="showConfirm ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required, rules.match]"
+                :type="showConfirm ? 'text' : 'password'"
+                name="confirmPassword"
+                label="Wachtwoord bevestigen"
+                hint="De ingevulde wachtwoorden moeten overeen komen"
+                @click:append="showConfirm = !showConfirm"
               />
-            </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn color="primary">
-              Registreren
-            </v-btn>
-          </v-card-actions>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                type="submit"
+                color="primary"
+              >
+                Registreren
+              </v-btn>
+            </v-card-actions>
+          </v-form>
         </v-card>
       </v-col>
     </v-row>
@@ -65,6 +85,38 @@
 
 <script>
 export default {
-  name: 'Register'
+  name: 'Register',
+  data () {
+    return {
+      email: '',
+      username: '',
+      password: '',
+      showPassword: false,
+      confirmPassword: '',
+      showConfirm: false,
+      rules: {
+        required: value => !!value || 'Verplicht.',
+        minimum: value => value.length >= 8 || 'Minimaal 8 karakters',
+        match: value => value === this.password || 'Wachtwoorden komen niet overeen'
+      }
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.getters.user
+    }
+  },
+  watch: {
+    user (value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/')
+      }
+    }
+  },
+  methods: {
+    onRegister () {
+      this.$store.dispatch('registerUser', { email: this.email, password: this.password })
+    }
+  }
 }
 </script>
