@@ -4,8 +4,11 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import DateFilter from './filters/date'
 
 Vue.config.productionTip = false
+
+Vue.filter('date', DateFilter)
 
 new Vue({
   router,

@@ -81,7 +81,8 @@ export default new Vuex.Store({
     createCategory ({ commit }, payload) {
       const category = {
         sport: payload.sport,
-        imageUrl: payload.imageUrl
+        imageUrl: payload.imageUrl,
+        id: 'tempID'
       }
       // TODO: Add to database/ firebase including image upload
       commit('createCategory', category)
