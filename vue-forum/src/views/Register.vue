@@ -26,20 +26,22 @@
               <v-text-field
                 id="email"
                 v-model="email"
-                label="E-mail"
-                name="email"
                 prepend-icon="mdi-mail"
+                :rules="[rules.required]"
                 type="email"
-                required
+                name="email"
+                label="E-mail"
+                hint="Voer een geldig e-mailadres in"
               />
               <v-text-field
                 id="username"
                 v-model="username"
-                label="Gebruikersnaam"
-                name="username"
                 prepend-icon="mdi-account"
+                :rules="[rules.required]"
                 type="text"
-                required
+                name="username"
+                label="Gebruikersnaam"
+                hint="Let op: na registratie niet te wijzigen"
               />
               <v-text-field
                 id="password"

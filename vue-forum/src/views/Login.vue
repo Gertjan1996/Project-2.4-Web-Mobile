@@ -21,29 +21,52 @@
           >
             <v-toolbar-title>Inloggen</v-toolbar-title>
           </v-toolbar>
-          <v-card-text>
-            <v-form>
+          <v-form @submit.prevent="onLogin">
+            <v-card-text>
               <v-text-field
-                label="Gebruikersnaam"
-                name="username"
+                id="email"
+                v-model="email"
+                prepend-icon="mdi-mail"
+                :rules="[rules.required]"
+                type="email"
+                name="email"
+                label="E-mail"
+                hint="Voer uw e-mailadres in"
+              />
+              <v-text-field
+                id="username"
+                v-model="username"
                 prepend-icon="mdi-account"
+                :rules="[rules.required]"
                 type="text"
+                name="username"
+                label="Gebruikersnaam"
+                hint="Voer uw gebuikersnaam in"
               />
               <v-text-field
                 id="password"
-                label="Wachtwoord"
-                name="password"
+                v-model="password"
                 prepend-icon="mdi-lock"
-                type="password"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required, rules.minimum]"
+                :type="showPassword ? 'text' : 'password'"
+                name="password"
+                label="Wachtwoord"
+                hint="Voer uw wachtwoord in"
+                counter
+                @click:append="showPassword = !showPassword"
               />
-            </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn color="primary">
-              Inloggen
-            </v-btn>
-          </v-card-actions>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                type="submit"
+                color="primary"
+              >
+                Inloggen
+              </v-btn>
+            </v-card-actions>
+          </v-form>
         </v-card>
       </v-col>
     </v-row>
@@ -52,6 +75,35 @@
 
 <script>
 export default {
-  name: 'Login'
+  name: 'Login',
+  data () {
+    return {
+      email: '',
+      username: '',
+      password: '',
+      showPassword: false,
+      rules: {
+        required: value => !!value || 'Verplicht.',
+        minimum: value => value.length >= 8 || 'Minimaal 8 karakters'
+      }
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.getters.user
+    }
+  },
+  watch: {
+    user (value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/')
+      }
+    }
+  },
+  methods: {
+    onLogin () {
+      this.$store.dispatch('loginUser', { email: this.email, password: this.password })
+    }
+  }
 }
 </script>
