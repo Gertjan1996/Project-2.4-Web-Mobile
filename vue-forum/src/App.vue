@@ -82,14 +82,27 @@
 export default {
   name: 'App',
   data: () => ({
-    drawer: null,
-    menuItems: [
-      { icon: 'mdi-forum', title: 'Forum', link: '/categories' },
-      { icon: 'mdi-face', title: 'Profiel', link: '/profiel' },
-      { icon: 'mdi-account-multiple-plus', title: 'Registreren', link: '/registreren' },
-      { icon: 'mdi-login', title: 'Inloggen', link: '/login' },
-      { icon: 'mdi-plus-box', title: 'Categorie aanmaken', link: '/categorie/new' }
-    ]
-  })
+    drawer: null
+  }),
+  computed: {
+    menuItems () {
+      let menuItems = [
+        { icon: 'mdi-forum', title: 'Forum', link: '/categories' },
+        { icon: 'mdi-account-multiple-plus', title: 'Registreren', link: '/registreren' },
+        { icon: 'mdi-login', title: 'Inloggen', link: '/login' }
+      ]
+      if (this.isAuthenticated) {
+        menuItems = [
+          { icon: 'mdi-forum', title: 'Forum', link: '/categories' },
+          { icon: 'mdi-face', title: 'Profiel', link: '/profiel' },
+          { icon: 'mdi-plus-box', title: 'Categorie aanmaken', link: '/categorie/new' }
+        ]
+      }
+      return menuItems
+    },
+    isAuthenticated () {
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    }
+  }
 }
 </script>

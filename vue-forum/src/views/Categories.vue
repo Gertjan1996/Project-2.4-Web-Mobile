@@ -19,7 +19,6 @@
           :to="'/categories/' + category.id"
         >
           <v-list-item>
-            <v-list-item-avatar color="grey" />
             <v-list-item-content>
               <v-list-item-title class="headline">
                 {{ category.sport }}
