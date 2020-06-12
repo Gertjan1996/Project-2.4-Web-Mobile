@@ -160,6 +160,9 @@ export default new Vuex.Store({
           commit('setError', error)
         })
     },
+    setUser ({ commit }, payload) {
+      commit('setUser', payload)
+    },
     clearError ({ commit }) {
       commit('clearError')
     }
