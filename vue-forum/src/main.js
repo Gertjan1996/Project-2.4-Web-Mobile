@@ -17,10 +17,11 @@ Vue.prototype.$http.defaults.headers.common.Accept = 'application/json'
 Vue.prototype.$http.defaults.headers.common['Accept-language'] = 'nl'
 Vue.prototype.$http.defaults.headers.post['Content-Type'] = 'application/json'
 
-const token = localStorage.getItem('token')
-if (token) {
-  console.log('Token found and set as common header. Token is ' + token)
-  Vue.prototype.$http.defaults.headers.common.Authorization = 'Bearer ' + token
+const user = JSON.parse(localStorage.getItem('user'))
+if (user) {
+  console.log(user)
+  console.log('User fount and set as common header. Token is ' + user.token)
+  Vue.prototype.$http.defaults.headers.common.Authorization = 'Bearer ' + user.token
 }
 
 Vue.filter('date', DateFilter)

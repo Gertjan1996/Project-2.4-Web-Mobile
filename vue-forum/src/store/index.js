@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import * as firebase from 'firebase'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    user: null,
     loadedCategories: [
       {
         sport: 'Fitness',
@@ -69,7 +69,6 @@ export default new Vuex.Store({
         id: '12'
       }
     ],
-    user: null,
     loading: false,
     error: null
   },
@@ -79,6 +78,9 @@ export default new Vuex.Store({
     },
     setUser (state, payload) {
       state.user = payload
+    },
+    clearUser (state) {
+      state.user = null
     },
     setLoading (state, payload) {
       state.loading = payload
@@ -111,44 +113,52 @@ export default new Vuex.Store({
         .then(res => {
           console.log(res)
           commit('setLoading', false)
-          const newUser = {
-            id: res.data.localId,
-            email: payload.email,
+          const user = {
             username: payload.username,
+            email: payload.email,
+            id: res.data.localId,
             token: res.data.idToken
           }
-          localStorage.setItem('user', newUser)
+          localStorage.setItem('user', JSON.stringify(user))
           axios.defaults.headers.common.Authorization = 'Bearer ' + res.data.idToken
-          commit('setUser', newUser)
+          commit('setUser', user)
         })
         .catch(error => {
           console.log(error)
           localStorage.removeItem('user')
           commit('setLoading', false)
+          commit('clearUser')
           commit('setError', error)
         })
     },
     loginUser ({ commit }, payload) {
       commit('setLoading', true)
       commit('clearError')
-      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-        .then(
-          data => {
-            commit('setLoading', false)
-            const loginUser = {
-              id: data.user.uid,
-              username: 'test'
-            }
-            commit('setUser', loginUser)
+      axios.post('/accounts:signIn?key=AIzaSyATj4BPnYWTW4kNrEoU8Ged-9Oe1t9tSog', {
+        email: payload.email,
+        password: payload.password,
+        returnSecureToken: true
+      })
+        .then(res => {
+          console.log(res)
+          commit('setLoading', false)
+          const user = {
+            username: payload.username,
+            email: payload.email,
+            id: res.data.localId,
+            token: res.data.idToken
           }
-        )
-        .catch(
-          error => {
-            commit('setLoading', false)
-            commit('setError', error)
-            console.log(error)
-          }
-        )
+          localStorage.setItem('user', JSON.stringify(user))
+          axios.defaults.headers.common.Authorization = 'Bearer ' + res.data.idToken
+          commit('setUser', user)
+        })
+        .catch(error => {
+          console.log(error)
+          localStorage.removeItem('user')
+          commit('setLoading', false)
+          commit('clearUser')
+          commit('setError', error)
+        })
     },
     clearError ({ commit }) {
       commit('clearError')
