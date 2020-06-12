@@ -15,8 +15,8 @@
       >
         <app-alert
           v-if="error"
-          @dismissed="onDismissed"
           :text="error.message"
+          @dismissed="onDismissed"
         />
         <v-card class="elevation-12">
           <v-toolbar
@@ -61,8 +61,8 @@
                 label="Wachtwoord"
                 hint="Voer uw wachtwoord in"
                 counter
-                @click:append="showPassword = !showPassword"
                 required
+                @click:append="showPassword = !showPassword"
               />
             </v-card-text>
             <v-card-actions>

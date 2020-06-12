@@ -15,8 +15,8 @@
       >
         <app-alert
           v-if="error"
-          @dismissed="onDismissed"
           :text="error.message"
+          @dismissed="onDismissed"
         />
         <v-card class="elevation-12">
           <v-toolbar
@@ -61,8 +61,8 @@
                 label="Wachtwoord"
                 hint="Let op: minimaal 8 karakters"
                 counter
-                @click:append="showPassword = !showPassword"
                 required
+                @click:append="showPassword = !showPassword"
               />
               <v-text-field
                 id="confirmPassword"
@@ -74,8 +74,8 @@
                 name="confirmPassword"
                 label="Wachtwoord bevestigen"
                 hint="De ingevulde wachtwoorden moeten overeen komen"
-                @click:append="showConfirm = !showConfirm"
                 required
+                @click:append="showConfirm = !showConfirm"
               />
             </v-card-text>
             <v-card-actions>

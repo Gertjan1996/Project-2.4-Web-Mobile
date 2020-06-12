@@ -12,7 +12,12 @@
 <script>
 export default {
   name: 'Alert',
-  props: ['text'],
+  props: {
+    text: {
+      type: String,
+      required: true
+    }
+  },
   methods: {
     onClose () {
       this.$emit('dismissed')

@@ -43,7 +43,12 @@
 <script>
 export default {
   name: 'Category',
-  props: ['id'],
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   computed: {
     category () {
       return this.$store.getters.loadedCategory(this.id)
