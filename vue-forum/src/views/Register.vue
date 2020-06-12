@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     onRegister () {
-      this.$store.dispatch('registerUser', { email: this.email, password: this.password })
+      this.$store.dispatch('registerUser', { email: this.email, username: this.username, password: this.password })
     },
     onDismissed () {
       this.$store.dispatch('clearError')

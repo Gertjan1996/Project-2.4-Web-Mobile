@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 import * as firebase from 'firebase'
 
 Vue.use(Vuex)
@@ -102,24 +103,30 @@ export default new Vuex.Store({
     registerUser ({ commit }, payload) {
       commit('setLoading', true)
       commit('clearError')
-      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-        .then(
-          data => {
-            commit('setLoading', false)
-            const newUser = {
-              id: data.user.uid,
-              username: 'test'
-            }
-            commit('setUser', newUser)
+      axios.post('/accounts:signUp?key=AIzaSyATj4BPnYWTW4kNrEoU8Ged-9Oe1t9tSog', {
+        email: payload.email,
+        password: payload.password,
+        returnSecureToken: true
+      })
+        .then(res => {
+          console.log(res)
+          commit('setLoading', false)
+          const newUser = {
+            id: res.data.localId,
+            email: payload.email,
+            username: payload.username,
+            token: res.data.idToken
           }
-        )
-        .catch(
-          error => {
-            commit('setLoading', false)
-            commit('setError', error)
-            console.log(error)
-          }
-        )
+          localStorage.setItem('user', newUser)
+          axios.defaults.headers.common.Authorization = 'Bearer ' + res.data.idToken
+          commit('setUser', newUser)
+        })
+        .catch(error => {
+          console.log(error)
+          localStorage.removeItem('user')
+          commit('setLoading', false)
+          commit('setError', error)
+        })
     },
     loginUser ({ commit }, payload) {
       commit('setLoading', true)

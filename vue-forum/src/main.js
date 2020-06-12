@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Axios from 'axios'
 import App from './App.vue'
 import * as firebase from 'firebase'
 import './registerServiceWorker'
@@ -9,6 +10,18 @@ import DateFilter from './filters/date'
 import Alert from './components/Alert'
 
 Vue.config.productionTip = false
+
+Vue.prototype.$http = Axios
+Vue.prototype.$http.defaults.baseURL = 'https://identitytoolkit.googleapis.com/v1'
+Vue.prototype.$http.defaults.headers.common.Accept = 'application/json'
+Vue.prototype.$http.defaults.headers.common['Accept-language'] = 'nl'
+Vue.prototype.$http.defaults.headers.post['Content-Type'] = 'application/json'
+
+const token = localStorage.getItem('token')
+if (token) {
+  console.log('Token found and set as common header. Token is ' + token)
+  Vue.prototype.$http.defaults.headers.common.Authorization = 'Bearer ' + token
+}
 
 Vue.filter('date', DateFilter)
 Vue.component('app-alert', Alert)
