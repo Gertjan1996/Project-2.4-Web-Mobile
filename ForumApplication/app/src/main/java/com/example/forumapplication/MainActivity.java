@@ -18,6 +18,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     @Override
@@ -34,6 +36,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        ArrayList<home_items> home_items_list = new ArrayList<>();
+        home_items_list.add(new home_items(R.drawable.voetball,"Voetball"));
+        home_items_list.add(new home_items(R.drawable.basketball,"Basketball"));
+        home_items_list.add(new home_items(R.drawable.veldhockey,"Veldhockey"));
+        home_items_list.add(new home_items(R.drawable.swim,"Swimming"));
+        home_items_list.add(new home_items(R.drawable.volleyball,"Volleyball"));
     }
 
     @Override
@@ -56,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
+            case R.id.nav_home:
+                startActivity(new Intent((getApplicationContext()),MainActivity.class));
+                break;
             case R.id.nav_poster:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PosterFragment()).commit();
                 break;
