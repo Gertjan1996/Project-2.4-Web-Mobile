@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken')
 
 // users hardcoded for simplicity, store in a db for production applications
 const users = [
-  { id: 1, username: 'admin', password: 'admin', firstName: 'Admin', lastName: 'User', role: 'Admin' },
-  { id: 2, username: 'user', password: 'user', firstName: 'Normal', lastName: 'User', role: 'User' }
+  { id: 1, username: 'admin', password: 'admin', firstName: 'Gertjan', lastName: 'Haan', role: 'Admin' },
+  { id: 2, username: 'user', password: 'user', firstName: 'Test', lastName: 'Test', role: 'User' }
 ]
 
 module.exports = {

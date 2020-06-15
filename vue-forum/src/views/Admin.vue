@@ -8,12 +8,24 @@
     >
       <v-col
         align="center"
-        cols="6"
-        md="4"
-        lg="3"
+        cols="12"
+        sm="8"
+        md="6"
+        lg="5"
       >
-        <p>U bent nu ingelogd als Admin</p>
-        <p><i>Als Admin kunt u alle berichten wijzigen, verwijderen en daarnaast ook een nieuwe categorie aanmaken.</i></p>
+        <h1>Admin</h1>
+        <p>Deze pagina is alleen bereikbaar voor admins</p>
+        <div>
+          Lijst van geregistreerde users:
+          <ul v-if="users.length">
+            <li
+              v-for="user in users"
+              :key="user.id"
+            >
+              {{ user.firstName + ' ' + user.lastName + ' - ' + user.role }}
+            </li>
+          </ul>
+        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -21,6 +33,32 @@
 
 <script>
 export default {
-  name: 'Admin'
+  name: 'Admin',
+  data () {
+    return {
+      users: []
+    }
+  },
+  created () {
+    this.getUsers()
+  },
+  methods: {
+    getUsers () {
+      return this.$http.get('/users')
+        .then(res => {
+          console.log(res)
+          this.users = res.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  }
 }
 </script>
+
+<style scoped>
+ul {
+  list-style: none;
+}
+</style>

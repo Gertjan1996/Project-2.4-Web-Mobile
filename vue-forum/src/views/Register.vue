@@ -133,7 +133,13 @@ export default {
   watch: {
     user (value) {
       if (value !== null && value !== undefined) {
-        this.$router.push('/')
+        if (value.role === 'Admin') {
+          this.$router.push('/admin')
+        } else if (value.role === 'User') {
+          this.$router.push('/user')
+        } else {
+          this.$router.push('/')
+        }
       }
     }
   },

@@ -15,6 +15,22 @@ const routes = [
     }
   },
   {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('../views/Admin.vue'),
+    meta: {
+      auth: ['Admin']
+    }
+  },
+  {
+    path: '/gebruiker',
+    name: 'User',
+    component: () => import('../views/User.vue'),
+    meta: {
+      auth: ['Admin', 'User']
+    }
+  },
+  {
     path: '/categories',
     name: 'Categorieen',
     component: () => import('../views/Categories.vue'),
