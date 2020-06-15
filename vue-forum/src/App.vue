@@ -23,9 +23,22 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item
+          v-if="isUser || isAdmin"
+          link
+          @click="logout"
+        >
+          <v-list-item-action>
+            <v-icon>mdi-logout</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>
+              Uitloggen
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
     <v-app-bar
       dark
       app
@@ -61,6 +74,16 @@
           </v-icon>
           {{ item.title }}
         </v-btn>
+        <v-btn
+          v-if="isUser || isAdmin"
+          text
+          @click="logout"
+        >
+          <v-icon left>
+            mdi-logout
+          </v-icon>
+          Uitloggen
+        </v-btn>
       </v-toolbar-items>
     </v-app-bar>
 
@@ -85,13 +108,25 @@ export default {
     drawer: null
   }),
   computed: {
+    isUser () {
+      return this.$store.getters.user && this.$store.getters.user.role === 'User'
+    },
+    isAdmin () {
+      return this.$store.getters.user && this.$store.getters.user.role === 'Admin'
+    },
     menuItems () {
       let menuItems = [
         { icon: 'mdi-forum', title: 'Forum', link: '/categories' },
         { icon: 'mdi-account-multiple-plus', title: 'Registreren', link: '/registreren' },
         { icon: 'mdi-login', title: 'Inloggen', link: '/login' }
       ]
-      if (this.isAuthenticated) {
+      if (this.isUser) {
+        menuItems = [
+          { icon: 'mdi-forum', title: 'Forum', link: '/categories' },
+          { icon: 'mdi-face', title: 'Profiel', link: '/profiel' },
+          { icon: 'mdi-plus-box', title: 'Categorie aanmaken', link: '/categorie/new' }
+        ]
+      } else if (this.isAdmin) {
         menuItems = [
           { icon: 'mdi-forum', title: 'Forum', link: '/categories' },
           { icon: 'mdi-face', title: 'Profiel', link: '/profiel' },
@@ -99,9 +134,12 @@ export default {
         ]
       }
       return menuItems
-    },
-    isAuthenticated () {
-      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    }
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('logoutUser')
+      this.$router.push('/login')
     }
   }
 }

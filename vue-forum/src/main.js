@@ -11,7 +11,7 @@ import Alert from './components/Alert'
 Vue.config.productionTip = false
 
 Vue.prototype.$http = Axios
-Vue.prototype.$http.defaults.baseURL = 'https://identitytoolkit.googleapis.com/v1'
+Vue.prototype.$http.defaults.baseURL = 'http://localhost:4000'
 Vue.prototype.$http.defaults.headers.common.Accept = 'application/json'
 Vue.prototype.$http.defaults.headers.common['Accept-language'] = 'nl'
 Vue.prototype.$http.defaults.headers.post['Content-Type'] = 'application/json'

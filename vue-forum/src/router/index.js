@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -8,23 +9,35 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      auth: []
+    }
   },
   {
     path: '/categories',
     name: 'Categorieen',
-    component: () => import('../views/Categories.vue')
+    component: () => import('../views/Categories.vue'),
+    meta: {
+      auth: []
+    }
   },
   {
     path: '/categorie/new',
     name: 'CreateCategory',
-    component: () => import('../views/CreateCategory.vue')
+    component: () => import('../views/CreateCategory.vue'),
+    meta: {
+      auth: ['Admin']
+    }
   },
   {
     path: '/categories/:id',
     name: 'Category',
     props: true,
-    component: () => import('../views/Category.vue')
+    component: () => import('../views/Category.vue'),
+    meta: {
+      auth: []
+    }
   },
   {
     path: '/login',
@@ -34,17 +47,30 @@ const routes = [
   {
     path: '/post/new',
     name: 'CreatePost',
-    component: () => import('../views/Post.vue')
+    component: () => import('../views/Post.vue'),
+    meta: {
+      auth: ['User', 'Admin']
+    }
   },
   {
     path: '/profiel',
     name: 'Profiel',
-    component: () => import('../views/Profile.vue')
+    component: () => import('../views/Profile.vue'),
+    meta: {
+      auth: ['User', 'Admin']
+    }
   },
   {
     path: '/registreren',
     name: 'Registreren',
-    component: () => import('../views/Register.vue')
+    component: () => import('../views/Register.vue'),
+    meta: {
+      auth: []
+    }
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 
@@ -54,13 +80,18 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   const publicPages = ["/login"]
-//   const authRequired = !publicPages.includes(to.path)
-//   if (authRequired && !store.state.auth.status.loggedIn) {
-//     return next("/login")
-//   }
-//   next()
-// })
+router.beforeEach((to, from, next) => {
+  const { auth } = to.meta
+  const user = store.getters.user
+  if (auth) {
+    if (!user) {
+      return next('/login')
+    }
+    if (auth.length && !auth.includes(user.role)) {
+      return next('/')
+    }
+  }
+  next()
+})
 
 export default router

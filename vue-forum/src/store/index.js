@@ -125,43 +125,39 @@ export default new Vuex.Store({
         })
         .catch(error => {
           console.log(error)
-          localStorage.removeItem('user')
           commit('setLoading', false)
-          commit('clearUser')
+          commit('logoutUser')
           commit('setError', error)
         })
     },
     loginUser ({ commit }, payload) {
       commit('setLoading', true)
       commit('clearError')
-      axios.post('/accounts:signIn?key=AIzaSyATj4BPnYWTW4kNrEoU8Ged-9Oe1t9tSog', {
-        email: payload.email,
-        password: payload.password,
-        returnSecureToken: true
+      axios.post('/users/authenticate', {
+        username: payload.email,
+        password: payload.password
       })
         .then(res => {
           console.log(res)
           commit('setLoading', false)
-          const user = {
-            username: payload.username,
-            email: payload.email,
-            id: res.data.localId,
-            token: res.data.idToken
-          }
-          localStorage.setItem('user', JSON.stringify(user))
-          axios.defaults.headers.common.Authorization = 'Bearer ' + res.data.idToken
-          commit('setUser', user)
+          localStorage.setItem('user', JSON.stringify(res.data))
+          axios.defaults.headers.common.Authorization = 'Bearer ' + res.data.token
+          commit('setUser', res.data)
         })
         .catch(error => {
           console.log(error)
-          localStorage.removeItem('user')
           commit('setLoading', false)
-          commit('clearUser')
+          commit('logoutUser')
           commit('setError', error)
         })
     },
     setUser ({ commit }, payload) {
       commit('setUser', payload)
+    },
+    logoutUser ({ commit }) {
+      commit('clearUser')
+      localStorage.removeItem('user')
+      delete axios.defaults.headers.common.Authorization
     },
     clearError ({ commit }) {
       commit('clearError')
