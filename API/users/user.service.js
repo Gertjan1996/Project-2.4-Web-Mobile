@@ -7,12 +7,6 @@ const bcrypt = require('bcryptjs')
 const mongodb = require('_helpers/mongodb')
 const User = mongodb.User
 
-// Gebruikers hardcoded. Moet bijvoorbeeld in MongoDB worden opgeslagen met gehaste wachtwoorden
-const users = [
-  { id: 1, username: 'admin', password: 'adminadmin', email: 'admin@admin.nl', role: 'Admin' },
-  { id: 2, username: 'user', password: 'useruser', email: 'user@user.nl', role: 'User' }
-]
-
 // Beschikbare methodes
 module.exports = {
   authenticate,
