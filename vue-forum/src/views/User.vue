@@ -19,7 +19,7 @@
           Huidige user vanuit API call:
           <ul v-if="user">
             <li>
-              {{ user.firstName + ' ' + user.lastName + ' - ' + user.role }}
+              {{ 'Gebruikersnaam: ' + user.username + ' - E-mail: ' + user.email + ' - Rol: ' + user.role }}
             </li>
           </ul>
         </div>

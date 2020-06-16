@@ -22,7 +22,7 @@
               v-for="user in users"
               :key="user.id"
             >
-              {{ user.firstName + ' ' + user.lastName + ' - ' + user.role }}
+              {{ 'Gebruikersnaam: ' + user.username + ' - E-mail: ' + user.email + ' - Rol: ' + user.role }}
             </li>
           </ul>
         </div>

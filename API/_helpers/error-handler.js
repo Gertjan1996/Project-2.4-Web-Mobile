@@ -1,16 +1,18 @@
+// Error handling middleware
+
 module.exports = errorHandler
 
 function errorHandler(err, req, res, next) {
   if (typeof (err) === 'string') {
-    // custom application error
+    // Custom applicationerror
     return res.status(400).json({ message: err })
   }
 
   if (err.name === 'UnauthorizedError') {
-    // jwt authentication error
-    return res.status(401).json({ message: 'Invalid Token' })
+    // JWT authenticatie-error
+    return res.status(401).json({ message: 'Token ongeldig, log opnieuw in' })
   }
 
-  // default to 500 server error
+  // Default is 500 (servererror)
   return res.status(500).json({ message: err.message })
 }
