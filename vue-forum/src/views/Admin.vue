@@ -16,7 +16,7 @@
         <h1>Admin</h1>
         <p>Deze pagina is alleen bereikbaar voor admins</p>
         <div>
-          Lijst van geregistreerde users:
+          Lijst van geregistreerde users vanuit API call:
           <ul v-if="users.length">
             <li
               v-for="user in users"

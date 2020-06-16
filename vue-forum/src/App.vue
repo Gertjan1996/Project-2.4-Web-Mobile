@@ -122,12 +122,14 @@ export default {
       ]
       if (this.isUser) {
         menuItems = [
+          { icon: 'mdi-account', title: 'Gebruiker', link: '/gebruiker' },
           { icon: 'mdi-forum', title: 'Forum', link: '/categories' },
           { icon: 'mdi-face', title: 'Profiel', link: '/profiel' }
         ]
       } else if (this.isAdmin) {
         menuItems = [
-          { icon: 'mdi-admin', title: 'Admin', link: '/admin' },
+          { icon: 'mdi-account-lock', title: 'Admin', link: '/admin' },
+          { icon: 'mdi-account', title: 'Gebruiker', link: '/gebruiker' },
           { icon: 'mdi-forum', title: 'Forum', link: '/categories' },
           { icon: 'mdi-face', title: 'Profiel', link: '/profiel' },
           { icon: 'mdi-plus-box', title: 'Categorie aanmaken', link: '/categorie/new' }

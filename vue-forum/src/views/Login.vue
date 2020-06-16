@@ -120,7 +120,7 @@ export default {
         if (value.role === 'Admin') {
           this.$router.push('/admin')
         } else if (value.role === 'User') {
-          this.$router.push('/user')
+          this.$router.push('/gebruiker')
         } else {
           this.$router.push('/')
         }
