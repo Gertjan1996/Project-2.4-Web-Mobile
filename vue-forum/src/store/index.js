@@ -105,29 +105,18 @@ export default new Vuex.Store({
     registerUser ({ commit }, payload) {
       commit('setLoading', true)
       commit('clearError')
-      axios.post('/accounts:signUp?key=AIzaSyATj4BPnYWTW4kNrEoU8Ged-9Oe1t9tSog', {
-        email: payload.email,
+      axios.post('/users/register', {
+        username: payload.username,
         password: payload.password,
-        returnSecureToken: true
+        email: payload.email
       })
         .then(res => {
+          console.log('Registratie succesvol: ')
           console.log(res)
-          commit('setLoading', false)
-          const user = {
-            username: payload.username,
-            email: payload.email,
-            id: res.data.localId,
-            token: res.data.idToken
-          }
-          localStorage.setItem('user', JSON.stringify(user))
-          axios.defaults.headers.common.Authorization = 'Bearer ' + res.data.idToken
-          commit('setUser', user)
         })
         .catch(error => {
+          console.log('Error: ')
           console.log(error)
-          commit('setLoading', false)
-          commit('logoutUser')
-          commit('setError', error)
         })
     },
     loginUser ({ commit }, payload) {

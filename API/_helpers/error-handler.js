@@ -8,6 +8,11 @@ function errorHandler(err, req, res, next) {
     return res.status(400).json({ message: err })
   }
 
+  if (err.name === 'ValidationError') {
+    // Mongoose validatie-error
+    return res.status(400).json({ message: err.message });
+  }
+
   if (err.name === 'UnauthorizedError') {
     // JWT authenticatie-error
     return res.status(401).json({ message: 'Token ongeldig, log opnieuw in' })

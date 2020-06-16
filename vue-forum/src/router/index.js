@@ -79,10 +79,7 @@ const routes = [
   {
     path: '/registreren',
     name: 'Registreren',
-    component: () => import('../views/Register.vue'),
-    meta: {
-      auth: []
-    }
+    component: () => import('../views/Register.vue')
   },
   {
     path: '*',

@@ -1,4 +1,4 @@
-﻿// Controller met routes voor de API
+﻿// UserController met beschikbare routes voor de API
 
 const express = require('express')
 const router = express.Router()
@@ -6,9 +6,12 @@ const userService = require('./user.service')
 const authorize = require('_helpers/authorize')
 
 // Beschikbare API-routes (prefix /users)
-router.post('/authenticate', authenticate)   // Public route
-router.get('/', authorize('Admin'), getAll)  // Admin route
-router.get('/:id', authorize(), getById)     // Route voor alle gebruikers
+router.post('/authenticate', authenticate)         // Public route
+router.post('/register', register)                 // Public route
+router.get('/', authorize('Admin'), getAll)        // Admin route
+router.get('/current', authorize(), getCurrent)    // Route voor alle gebruikers
+router.get('/:id', authorize('Admin'), getById)    // Route voor alle gebruikers
+router.delete('/:id', authorize('Admin'), _delete) // Admin route  
 
 module.exports = router
 
@@ -19,6 +22,13 @@ function authenticate(req, res, next) {
     .catch(error => next(error))
 }
 
+// Route voor registreren van nieuwe gebruikers
+function register(req, res, next) {
+  userService.create(req.body)
+    .then(() => res.json({}))
+    .catch(error => next(error))
+}
+
 // Route voor teruggeven van alle gebruikers
 function getAll(req, res, next) {
   userService.getAll()
@@ -26,17 +36,23 @@ function getAll(req, res, next) {
     .catch(error => next(error))
 }
 
+// Route voor teruggeven van huidige gebruiker
+function getCurrent(req, res, next) {
+  userService.getById(req.user.sub)
+    .then(user => user ? res.json(user) : res.sendStatus(404))
+    .catch(error => next(error))
+}
+
 // Route voor teruggeven van een gebruiker middels zijn/ haar ID
 function getById(req, res, next) {
-  const currentUser = req.user
-  const id = parseInt(req.params.id)
-
-  // Alleen admins toestaan records van andere gebruikers op te vragen
-  if (id !== currentUser.sub && currentUser.role !== 'Admin') {
-    return res.status(401).json({ message: 'Niet geauthoriseerd' })
-  }
-
   userService.getById(req.params.id)
     .then(user => user ? res.json(user) : res.sendStatus(404))
+    .catch(error => next(error))
+}
+
+// Route voor verwijderen van een gebruiker
+function _delete(req, res, next) {
+  userService.delete(req.params.id)
+    .then(() => res.json({}))
     .catch(error => next(error))
 }
