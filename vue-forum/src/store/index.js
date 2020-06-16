@@ -134,7 +134,7 @@ export default new Vuex.Store({
       commit('setLoading', true)
       commit('clearError')
       axios.post('/users/authenticate', {
-        username: payload.email,
+        username: payload.username,
         password: payload.password
       })
         .then(res => {

@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken')
 
 // Gebruikers hardcoded. Moet bijvoorbeeld in MongoDB worden opgeslagen met gehaste wachtwoorden
 const users = [
-  { id: 1, username: 'admin', password: 'admin', email: 'admin@admin.nl', role: 'Admin' },
-  { id: 2, username: 'user', password: 'user', email: 'user@user.nl', role: 'User' }
+  { id: 1, username: 'admin', password: 'adminadmin', email: 'admin@admin.nl', role: 'Admin' },
+  { id: 2, username: 'user', password: 'useruser', email: 'user@user.nl', role: 'User' }
 ]
 
 // Beschikbare methodes

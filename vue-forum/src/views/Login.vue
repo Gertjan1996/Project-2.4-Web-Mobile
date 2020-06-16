@@ -29,17 +29,6 @@
           <v-form @submit.prevent="onLogin">
             <v-card-text>
               <v-text-field
-                id="email"
-                v-model="email"
-                prepend-icon="mdi-mail"
-                :rules="[rules.required]"
-                type="email"
-                name="email"
-                label="E-mail"
-                hint="Voer uw e-mailadres in"
-                required
-              />
-              <v-text-field
                 id="username"
                 v-model="username"
                 prepend-icon="mdi-account"
@@ -93,7 +82,6 @@ export default {
   name: 'Login',
   data () {
     return {
-      email: '',
       username: '',
       password: '',
       showPassword: false,
@@ -129,7 +117,7 @@ export default {
   },
   methods: {
     onLogin () {
-      this.$store.dispatch('loginUser', { email: this.email, password: this.password })
+      this.$store.dispatch('loginUser', { username: this.username, password: this.password })
     },
     onDismissed () {
       this.$store.dispatch('clearError')
