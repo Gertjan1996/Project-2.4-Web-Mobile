@@ -1,4 +1,4 @@
-package com.example.forumapplication;
+package com.example.forumapplication.Data;
 
 public class home_items {
     private int mImageResource;

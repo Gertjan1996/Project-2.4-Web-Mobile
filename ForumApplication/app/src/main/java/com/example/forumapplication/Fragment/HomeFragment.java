@@ -1,4 +1,4 @@
-package com.example.forumapplication;
+package com.example.forumapplication.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.forumapplication.Activities.itemAdapter;
+import com.example.forumapplication.R;
+import com.example.forumapplication.Data.home_items;
 
 import java.util.ArrayList;
 

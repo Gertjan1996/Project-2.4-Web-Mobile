@@ -1,27 +1,25 @@
-package com.example.forumapplication;
+package com.example.forumapplication.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.forumapplication.Fragment.ChatFragment;
+import com.example.forumapplication.Fragment.HomeFragment;
+import com.example.forumapplication.Fragment.PosterFragment;
+import com.example.forumapplication.Fragment.ProfileFragment;
+import com.example.forumapplication.R;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void logout(View view){
-        FirebaseAuth.getInstance().signOut();
         Toast.makeText(this, "U bent uitgelogd", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         finish();

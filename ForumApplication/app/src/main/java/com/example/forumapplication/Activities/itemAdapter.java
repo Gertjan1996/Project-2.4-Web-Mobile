@@ -1,6 +1,5 @@
-package com.example.forumapplication;
+package com.example.forumapplication.Activities;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.forumapplication.R;
+import com.example.forumapplication.Data.home_items;
 
 import java.util.ArrayList;
 
