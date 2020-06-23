@@ -1,7 +1,7 @@
 import 'dotenv/config' // Environment variables (should come before other local imports)
 import cors from 'cors'
 import express from 'express'
-import models from './models'
+import models, { connectDb } from './models'
 import routes from './routes'
 
 console.log('Hello Node.js Project')
@@ -24,6 +24,8 @@ app.use('/users', routes.user)
 app.use('/categories', routes.category)
 app.use('/posts', routes.post)
 
-app.listen(process.env.PORT, () =>
-  console.log(`API draait op poort ${process.env.PORT}!`) // App listens on port set in .env
-)
+connectDb().then(async () => { // Connect to MongoDb database
+  app.listen(process.env.PORT, () =>
+    console.log(`API draait op poort ${process.env.PORT}!`) // App listens on port set in .env
+  )
+})
