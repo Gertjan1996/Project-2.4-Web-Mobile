@@ -1,34 +1,29 @@
-import { v4 } from 'uuid'
 import { Router } from 'express'
  
 const router = Router()
  
-router.get('/', (req, res) => { // curl http://localhost:3000/posts
-  return res.send(Object.values(req.context.models.posts))
+router.get('/', async (req, res) => { // curl http://localhost:3000/posts
+  const posts = await req.context.models.Post.find()
+  return res.send(posts)
 })
      
-router.get('/:postId', (req, res) => { // curl http://localhost:3000/posts/1
-  return res.send(req.context.models.posts[req.params.postId])
-})
-  
-router.post('/', (req, res) => { // curl -X POST -H "Content-Type:application/json" http://localhost:3000/posts -d "{\"text\":\"Test\"}"
-  const id = v4()
-  const post = {
-    id,
-    text: req.body.text,
-    userId: req.context.user.id,
-    categoryId: req.context.category.id
-  }
-  req.context.models.posts[id] = post
+router.get('/:postId', async (req, res) => { // curl http://localhost:3000/posts/1
+  const post = await req.context.models.Post.findById(req.params.postId)
   return res.send(post)
 })
   
-router.delete('/:postId', (req, res) => { // curl -X DELETE http://localhost:3000/posts/1
-  const {
-    [req.params.postId]: post,
-    ...otherPosts
-  } = req.context.models.posts
-  req.context.models.posts = otherPosts
+router.post('/', async (req, res) => { // curl -X POST -H "Content-Type:application/json" http://localhost:3000/posts -d "{\"text\":\"Test\"}"
+  const post = await req.context.models.Post.create({
+    text: req.body.text,
+    user: req.context.user.id,
+    category: req.context.category.id
+  })
+  return res.send(post)
+})
+  
+router.delete('/:postId', async (req, res) => { // curl -X DELETE http://localhost:3000/posts/1
+  const post = await req.context.models.Post.findById(req.params.postId)
+  if (post) { await post.remove() }
   return res.send(post)
 })
  

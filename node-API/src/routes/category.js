@@ -1,33 +1,28 @@
-import { v4 } from 'uuid'
 import { Router } from 'express'
  
 const router = Router()
  
-router.get('/', (req, res) => { // curl http://localhost:3000/categories
-  return res.send(Object.values(req.context.models.categories))
+router.get('/', async (req, res) => { // curl http://localhost:3000/categories
+  const categories = await req.context.models.Category.find()
+  return res.send(categories)
 })
        
-router.get('/:categoryId', (req, res) => { // curl http://localhost:3000/categories/1
-  return res.send(req.context.models.categories[req.params.categoryId])
-})
-  
-router.post('/', (req, res) => { // curl -X POST -H "Content-Type:application/json" http://localhost:3000/categories -d "{\"category\":\"Testcat\",\"imgPath\":\"Testpat\"}"
-  const id = v4()
-  const category = {
-    id,
-    category: req.body.category,
-    imgPath: req.body.imgPath
-  }
-  req.context.models.categories[id] = category
+router.get('/:categoryId', async (req, res) => { // curl http://localhost:3000/categories/1
+  const category = await req.context.models.Category.findById(req.params.categoryId)
   return res.send(category)
 })
   
-router.delete('/:categoryId', (req, res) => { // curl -X DELETE http://localhost:3000/categories/1
-  const {
-    [req.params.categoryId]: category,
-    ...otherCategories
-  } = req.context.models.categories
-  req.context.models.categories = otherCategories
+router.post('/', async (req, res) => { // curl -X POST -H "Content-Type:application/json" http://localhost:3000/categories -d "{\"category\":\"Testcat\",\"imgPath\":\"Testpat\"}"
+  const category = await req.context.models.Category.create({
+    category: req.body.category,
+    imgPath: req.body.imgPath
+  })
+  return res.send(category)
+})
+  
+router.delete('/:categoryId', async (req, res) => { // curl -X DELETE http://localhost:3000/categories/1
+  const category = await req.context.Category.findById(req.params.categoryId)
+  if (category) { await category.remove() }
   return res.send(category)
 })
  
