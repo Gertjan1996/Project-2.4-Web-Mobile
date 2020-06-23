@@ -23,6 +23,16 @@ app.use(async (req, res, next) => { // Middleware to add users[1] as sender and 
 app.use('/users', routes.user)
 app.use('/categories', routes.category)
 app.use('/posts', routes.post)
+app.get('*', function (req, res, next) { // Error for non-existing routes
+  const error = new Error(`${req.ip} probeerde de volgende URL te bereiken: ${req.originalUrl}`)
+  error.statusCode = 301
+  next(error)
+})
+app.use((error, req, res, next) => { // Middleware for errors
+  if (!error.statusCode) { error.statusCode = 500 }
+  if (error.statusCode === 301 ) { return res.status(301).redirect('/not-found') }
+  return res.status(error.statusCode).json({ error: error.toString() })
+})
 
 const eraseDatabaseOnSync = true
 

@@ -16,6 +16,9 @@ router.post('/', async (req, res) => { // curl -X POST -H "Content-Type:applicat
   const category = await req.context.models.Category.create({
     category: req.body.category,
     imgPath: req.body.imgPath
+  }).catch((error) => {
+    error.statusCode = 400
+    next(error)
   })
   return res.send(category)
 })

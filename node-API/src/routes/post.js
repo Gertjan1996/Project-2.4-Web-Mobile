@@ -17,6 +17,9 @@ router.post('/', async (req, res) => { // curl -X POST -H "Content-Type:applicat
     text: req.body.text,
     user: req.context.user.id,
     category: req.context.category.id
+  }).catch((error) => {
+    error.statusCode = 400
+    next(error)
   })
   return res.send(post)
 })
