@@ -7,10 +7,12 @@ const postSchema = new mongoose.Schema(
       required: true
     },
     user: {
-      type: mongoose.Schema.Types.ObjectId, ref: 'User'
+      type: mongoose.Schema.Types.ObjectId, ref: 'User',
+      required: true
     },
     category: {
-      type: mongoose.Schema.Types.ObjectId, ref: 'Category'
+      type: mongoose.Schema.Types.ObjectId, ref: 'Category',
+      required: true
     }
   },
   { timestamps: true } // Adds createdAt and updatedAt fields

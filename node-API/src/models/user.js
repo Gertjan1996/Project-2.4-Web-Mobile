@@ -13,6 +13,11 @@ const userSchema = new mongoose.Schema( // TODO: Add roles with default set as u
       unique: true,
       required: true,
       maxLength: 100
+    },
+    role: {
+      type: String,
+      required: true,
+      enum: ['Admin', 'User'], default: 'User'
     }
   },
   { timestamps: true } // Adds createdAt and updatedAt fields
