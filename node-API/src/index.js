@@ -2,30 +2,37 @@ import 'dotenv/config' // Environment variables (should come before other local 
 import cors from 'cors'
 import express from 'express'
 import mongoose from 'mongoose' 
-import models, { connectDb } from './models'
+import seedDb from './helpers/seedDb'
+import models from './models'
 import routes from './routes'
 
 console.log('Hello Node.js Project')
 console.log('SECRET: ' + process.env.MY_SECRET)
+console.log('Secret string not showing? .env environment variables staan niet op GitHub! ;)')
 
 const app = express() // Express application instance
-const eraseDatabaseOnSync = false
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }).then(async () => { // Connect to MongoDb database
-  if (eraseDatabaseOnSync) {
-    await Promise.all([
-      models.User.deleteMany({}),
-      models.Category.deleteMany({}),
-      models.Post.deleteMany({})
-    ])
-    createInitialData()
-  }
-  app.listen(process.env.PORT, () =>
-    console.log(`API draait op poort ${process.env.PORT}!`) // App listens on port set in .env
-  )
-})
+const eraseDatabaseOnSync = true // Change to true to delete all data in MongoDB database
+try {
+  mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }).then(async () => { // Connect to MongoDb database
+    if (eraseDatabaseOnSync) {
+      await Promise.all([
+        models.User.deleteMany({}),
+        models.Category.deleteMany({}),
+        models.Post.deleteMany({})
+      ])
+      seedDb() // Fill MongoDB database with some initial data
+    }
+    app.listen(process.env.PORT, () =>
+      console.log(`API draait op poort ${process.env.PORT}!`) // App listens on port set in .env
+    )
+  })
+} catch (error) {
+  console.log('Database of server error. Error: ' + error)
+}
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
+// Middleware section
 app.use(express.json()) // Middleware to transform json body type from request object
 app.use(express.urlencoded({ extended: true })) // Middleware to access payload of an HTTP POST request
 app.use(cors()) // Middleware to allow Cross-origin resource sharing
@@ -50,46 +57,3 @@ app.use((error, req, res, next) => { // Middleware for errors
   if (error.statusCode === 301 ) { return res.status(301).redirect('/not-found') }
   return res.status(error.statusCode).json({ error: error.toString() })
 })
-
-const createInitialData = async () => { // Database seeding
-  const user1 = new models.User({
-    username: 'Gertjan',
-    email: 'gertjan@live.nl',
-    role: 'Admin'
-  })
-  const user2 = new models.User({
-    username: 'Jun',
-    email: 'jun@live.nl',
-    role: 'Admin'
-  })
-  const user3 = new models.User({
-    username: 'NormalUser',
-    email: 'user@live.nl'
-  })
-  const category1 = new models.Category({
-    category: 'Voetbal',
-    imgPath: 'path_to_img'
-  })
-  const post1 = new models.Post({
-    text: 'Ik ben forumpost 1',
-    user: user1.id,
-    category: category1.id
-  })
-  const post2 = new models.Post({
-    text: 'Ik ben forumpost 2',
-    user: user2.id,
-    category: category1.id
-  })
-  const post3 = new models.Post({
-    text: 'Ik ben forumpost 3',
-    user: user2.id,
-    category: category1.id
-  })
-  await user1.save()
-  await user2.save()
-  await user3.save()
-  await category1.save()
-  await post1.save()
-  await post2.save()
-  await post3.save()
-}
