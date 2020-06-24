@@ -16,19 +16,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.forumapplication.Fragment.ChatFragment;
 import com.example.forumapplication.Fragment.HomeFragment;
-import com.example.forumapplication.Fragment.PosterFragment;
+import com.example.forumapplication.Fragment.MyPostsFragment;
 import com.example.forumapplication.Fragment.ProfileFragment;
 import com.example.forumapplication.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
-    /*
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
                 break;
             case R.id.nav_poster:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PosterFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new MyPostsFragment()).commit();
                 break;
             case R.id.nav_chat:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ChatFragment()).commit();

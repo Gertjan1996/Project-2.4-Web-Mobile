@@ -14,21 +14,37 @@ import com.example.forumapplication.Data.home_items;
 
 import java.util.ArrayList;
 
-public  class itemAdapter extends RecyclerView.Adapter<itemAdapter.ItemViewHolder> {
+public  class homeItemAdapter extends RecyclerView.Adapter<homeItemAdapter.ItemViewHolder> {
     private ArrayList<home_items>mHome_item_list;
-
+    private OnItemClickListener mListener;
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
     public static class  ItemViewHolder extends RecyclerView.ViewHolder{
         public ImageView mImageView;
         public TextView mTextView;
 
-        public ItemViewHolder(@NonNull View itemView) {
+        public ItemViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.image_view);
             mTextView = itemView.findViewById(R.id.text_view);
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!=null){
+                        int position = getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
-    public itemAdapter(ArrayList<home_items>item_list){
+    public homeItemAdapter(ArrayList<home_items>item_list){
         mHome_item_list = item_list;
     }
 
@@ -36,7 +52,7 @@ public  class itemAdapter extends RecyclerView.Adapter<itemAdapter.ItemViewHolde
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.sport_item,parent,false);
-        ItemViewHolder ivh =  new ItemViewHolder(v);
+        ItemViewHolder ivh =  new ItemViewHolder(v,mListener);
         return ivh;
     }
 
@@ -45,12 +61,14 @@ public  class itemAdapter extends RecyclerView.Adapter<itemAdapter.ItemViewHolde
             home_items currentItem = mHome_item_list.get(position);
             holder.mImageView.setImageResource(currentItem.getImageResource());
             holder.mTextView.setText(currentItem.getText());
+
     }
 
     @Override
     public int getItemCount() {
         return mHome_item_list.size();
     }
+
 
 
 }
