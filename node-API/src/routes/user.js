@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs'
 import { Router } from 'express'
  
 const router = Router()
@@ -12,8 +13,20 @@ router.get('/:userId', async (req, res) => { // curl http://localhost:3000/users
   return res.send(user)
 })
      
-router.post('/', (req, res) => { // curl -X POST http://localhost:3000/users
-  return res.send('POST (Create) HTTP methode ontvangen op user resource')
+router.post('/register', async (req, res) => { // curl -X POST http://localhost:3000/users/register
+  // Controleer of username beschikbaar iu
+  if (await req.context.models.User.findOne({ username: req.body.username })) {
+    throw 'Gebruikersnaam "' + req.body.username + '" is al in gebruik, kies een andere'
+  }
+  const user = await req.context.models.User.create({
+    username: req.body.username,
+    hash: bcrypt.hashSync(req.body.password, 10),
+    email: req.body.email
+  }).catch((error) => {
+    error.statusCode = 400
+    next(error)
+  })
+  return res.send(user)
 })
      
 router.put('/:userId', (req, res) => { // curl -X PUT http://localhost:3000/users/1

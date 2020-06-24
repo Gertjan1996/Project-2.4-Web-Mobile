@@ -11,7 +11,7 @@ console.log('SECRET: ' + process.env.MY_SECRET)
 console.log('Secret string not showing? .env environment variables staan niet op GitHub! ;)')
 
 const app = express() // Express application instance
-const eraseDatabaseOnSync = true // Change to true to delete all data in MongoDB database
+const eraseDatabaseOnSync = false // Set to true to delete all data in MongoDB database
 try {
   mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }).then(async () => { // Connect to MongoDb database
     if (eraseDatabaseOnSync) {

@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema( // TODO: Add roles with default set as u
       required: true,
       maxLength: 30
     },
+    hash: {
+      type: String,
+      required: true
+    },
     email: {
       type: String,
       unique: true,
