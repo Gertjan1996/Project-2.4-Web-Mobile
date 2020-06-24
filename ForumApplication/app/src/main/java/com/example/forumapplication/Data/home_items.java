@@ -1,9 +1,6 @@
 package com.example.forumapplication.Data;
 
-import androidx.fragment.app.Fragment;
 
-
-import com.example.forumapplication.R;
 
 public class home_items {
     private int mImageResource;
@@ -12,11 +9,8 @@ public class home_items {
         mImageResource = imageResource;
         mText = text;
     }
-    public void toDiffirentPostTheme(){
-        if(mText.equals("Voetball")){
 
-        }
-    }
+
     public int getImageResource(){
         return mImageResource;
     }

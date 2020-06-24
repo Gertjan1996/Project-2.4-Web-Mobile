@@ -1,9 +1,11 @@
 package com.example.forumapplication.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,14 +46,7 @@ public class HomeFragment extends Fragment {
         mAdapter.setOnItemClickListener(new homeItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-
-                for(int i =0; i<home_items_list.size();i++){
-                    if(home_items_list.get(i).equals("Voetball")){
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PostFragment()).commit();
-                    }
-                }
-
-
+                System.out.println(home_items_list.toString());
             }
         });
         return view;
