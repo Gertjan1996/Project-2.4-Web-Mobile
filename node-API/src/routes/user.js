@@ -1,11 +1,12 @@
 import bcrypt from 'bcryptjs'
 import Router from 'express'
 import jwt from 'jsonwebtoken'
+import authorize from '../helpers/authorize'
 import User from '../models/user'
  
 const router = Router()
  
-router.get('/', async (req, res) => {
+router.get('/', authorize('Admin'), async (req, res) => { // Get all users - admin level restriction
   User.find().then(users => {
     return res.status(200).json(users)
   }).catch(error => {
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
   })
 })
   
-router.get('/:userId', async (req, res) => { // curl http://localhost:3000/users/1
+router.get('/:userId', authorize(), async (req, res) => { // Get all users - user level restriction for own ID, overall admin level restriction
   User.findById(req.params.userId).then(user => {
     return res.status(200).json(user)
   }).catch(error => {
@@ -23,7 +24,7 @@ router.get('/:userId', async (req, res) => { // curl http://localhost:3000/users
   })
 })
 
-router.post('/authenticate', async (req, res) => {
+router.post('/authenticate', async (req, res) => { // Authenticate user - no restriction
   User.findOne({
     username: req.body.username
   }).then(user => {
@@ -44,7 +45,7 @@ router.post('/authenticate', async (req, res) => {
   })
 })
      
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res) => { // Register new user - no restriction
   User.create({
     username: req.body.username,
     hash: bcrypt.hashSync(req.body.password, 10),
@@ -58,14 +59,6 @@ router.post('/register', async (req, res) => {
     }
     return res.status(500).json({ error: 'Server error, probeer het later nog een keer' }) // Generic error message
   })
-})
-     
-router.put('/:userId', (req, res) => { // TODO: deze methode goed implementeren
-  return res.send(`PUT (Update) HTTP methode ontvangen op user/${req.params.userId} resource`)
-})
-     
-router.delete('/:userId', (req, res) => { // TODO: deze methode goed implementeren
-  return res.send(`DELETE (Delete) HTTP methode ontvangen op user/${req.params.userId} resource`)
 })
  
 export default router
