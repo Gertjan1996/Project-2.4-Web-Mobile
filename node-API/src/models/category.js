@@ -5,10 +5,12 @@ const categorySchema = new mongoose.Schema(
     category: {
       type: String,
       unique: true,
-      required: true
+      required: true,
+      maxLength: 50
     },
     imgPath: {
-      type: String
+      type: String,
+      maxLength: 100
     }
   },
   { timestamps: true } // Adds createdAt and updatedAt fields

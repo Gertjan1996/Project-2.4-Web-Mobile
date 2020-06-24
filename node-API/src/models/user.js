@@ -5,12 +5,14 @@ const userSchema = new mongoose.Schema( // TODO: Add roles with default set as u
     username: {
       type: String,
       unique: true,
-      required: true
+      required: true,
+      maxLength: 30
     },
     email: {
       type: String,
       unique: true,
-      required: true
+      required: true,
+      maxLength: 100
     }
   },
   { timestamps: true } // Adds createdAt and updatedAt fields

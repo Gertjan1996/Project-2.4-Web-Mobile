@@ -1,6 +1,7 @@
 import 'dotenv/config' // Environment variables (should come before other local imports)
 import cors from 'cors'
 import express from 'express'
+import mongoose from 'mongoose' 
 import models, { connectDb } from './models'
 import routes from './routes'
 
@@ -8,6 +9,22 @@ console.log('Hello Node.js Project')
 console.log('SECRET: ' + process.env.MY_SECRET)
 
 const app = express() // Express application instance
+const eraseDatabaseOnSync = false
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }).then(async () => { // Connect to MongoDb database
+  if (eraseDatabaseOnSync) {
+    await Promise.all([
+      models.User.deleteMany({}),
+      models.Category.deleteMany({}),
+      models.Post.deleteMany({})
+    ])
+    createInitialData()
+  }
+  app.listen(process.env.PORT, () =>
+    console.log(`API draait op poort ${process.env.PORT}!`) // App listens on port set in .env
+  )
+})
+const db = mongoose.connection
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.use(express.json()) // Middleware to transform json body type from request object
 app.use(express.urlencoded({ extended: true })) // Middleware to access payload of an HTTP POST request
@@ -32,22 +49,6 @@ app.use((error, req, res, next) => { // Middleware for errors
   if (!error.statusCode) { error.statusCode = 500 }
   if (error.statusCode === 301 ) { return res.status(301).redirect('/not-found') }
   return res.status(error.statusCode).json({ error: error.toString() })
-})
-
-const eraseDatabaseOnSync = true
-
-connectDb().then(async () => { // Connect to MongoDb database
-  if (eraseDatabaseOnSync) {
-    await Promise.all([
-      models.User.deleteMany({}),
-      models.Category.deleteMany({}),
-      models.Post.deleteMany({})
-    ])
-    createInitialData()
-  }
-  app.listen(process.env.PORT, () =>
-    console.log(`API draait op poort ${process.env.PORT}!`) // App listens on port set in .env
-  )
 })
 
 const createInitialData = async () => { // Database seeding
