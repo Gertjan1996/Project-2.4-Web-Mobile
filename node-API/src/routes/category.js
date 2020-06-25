@@ -1,11 +1,12 @@
 import Router from 'express'
 import authorize from '../helpers/authorize'
-import Category from '../models/user'
+import Category from '../models/category'
 
 const router = Router()
  
 router.get('/', async (req, res) => { // Get all categories - no restriction
   Category.find().then(categories => {
+    console.log(categories)
     return res.status(200).json(categories)
   }).catch(error => {
     console.log(error)

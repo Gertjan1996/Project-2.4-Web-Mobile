@@ -16,6 +16,17 @@ const categorySchema = new mongoose.Schema(
   { timestamps: true } // Adds createdAt and updatedAt fields
 )
 
+categorySchema.set('toJSON', {
+  virtuals: true,  // Virtual ID van MongoDB _id
+  versionKey: false, // Exclude the MongoDB version key
+  // ID en hash niet meenemen in API response
+  transform: function (doc, ret) {
+    delete ret._id
+    delete ret.createdAt
+    delete ret.updatedAt
+  }
+})
+
 categorySchema.pre('remove', function(next) { // Pre hook to delete messages in category when category is deleted
   this.model('Post').deleteMany({ category: this._id }, next)
 })
