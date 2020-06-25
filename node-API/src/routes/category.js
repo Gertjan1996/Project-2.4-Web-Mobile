@@ -1,32 +1,28 @@
-import { Router } from 'express'
- 
+import Router from 'express'
+import authorize from '../helpers/authorize'
+import Category from '../models/user'
+
 const router = Router()
  
-router.get('/', async (req, res) => { // curl http://localhost:3000/categories
-  const categories = await req.context.models.Category.find()
-  return res.send(categories)
+router.get('/', async (req, res) => { // Get all categories - no restriction
+  Category.find().then(categories => {
+    return res.status(200).json(categories)
+  }).catch(error => {
+    console.log(error)
+    return res.status(500).json({ error: 'Server error, probeer het later nog een keer' }) // Generic error message
+  })
 })
-       
-router.get('/:categoryId', async (req, res) => { // curl http://localhost:3000/categories/1
-  const category = await req.context.models.Category.findById(req.params.categoryId)
-  return res.send(category)
-})
-  
-router.post('/', async (req, res) => { // curl -X POST -H "Content-Type:application/json" http://localhost:3000/categories -d "{\"category\":\"Testcat\",\"imgPath\":\"Testpat\"}"
-  const category = await req.context.models.Category.create({
+
+router.post('/', authorize('Admin'), async (req, res) => { // Post new category - admin level restriction
+  Category.create({
     category: req.body.category,
     imgPath: req.body.imgPath
-  }).catch((error) => {
-    error.statusCode = 400
-    next(error)
+  }).then(() => {
+    return res.status(201).json({ message: 'Post aangemaakt' }) // Respond with success message
+  }).catch(error => {
+    console.log(error)
+    return res.status(500).json({ error: 'Server error, probeer het later nog een keer' }) // Generic error message
   })
-  return res.send(category)
-})
-  
-router.delete('/:categoryId', async (req, res) => { // curl -X DELETE http://localhost:3000/categories/1
-  const category = await req.context.Category.findById(req.params.categoryId)
-  if (category) { await category.remove() }
-  return res.send(category)
 })
  
 export default router

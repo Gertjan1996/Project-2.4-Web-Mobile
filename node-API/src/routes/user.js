@@ -15,8 +15,8 @@ router.get('/', authorize('Admin'), async (req, res) => { // Get all users - adm
   })
 })
   
-router.get('/:userId', authorize(), async (req, res) => { // Get all users - user level restriction for own ID, overall admin level restriction
-  User.findById(req.params.userId).then(user => {
+router.get('/:userId', authorize(), async (req, res) => { // Get single user - user level restriction for own ID, overall admin level restriction
+  User.findById(req.params.userId).then(user => { // TODO: Add restriction for normal user at only own ID
     return res.status(200).json(user)
   }).catch(error => {
     console.log(error)

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
  
-const userSchema = new mongoose.Schema( // TODO: Add roles with default set as user
+const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -41,7 +41,7 @@ userSchema.set('toJSON', {
   }
 })
 
-userSchema.statics.findByLogin = async function (login) { // Extra method to login with username OR email
+userSchema.statics.findByLogin = async function (login) { // Extra method to login with username OR email TODO: use this function
   let user = await this.findOne({ username: login })
   if (!user) { 
     user = await this.findOne({ email: login })
