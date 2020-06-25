@@ -18,6 +18,15 @@ const postSchema = new mongoose.Schema(
   { timestamps: true } // Adds createdAt and updatedAt fields
 )
 
+postSchema.set('toJSON', {
+  virtuals: true,  // Virtual ID van MongoDB _id
+  versionKey: false, // Exclude the MongoDB version key
+  // ID en hash niet meenemen in API response
+  transform: function (doc, ret) {
+    delete ret._id
+  }
+})
+
 const Post = mongoose.model('Post', postSchema)
  
 export default Post

@@ -1,10 +1,16 @@
 import { Router } from 'express'
- 
+import authorize from '../helpers/authorize'
+import Post from '../models/post'
+
 const router = Router()
- 
-router.get('/', async (req, res) => { // curl http://localhost:3000/posts
-  const posts = await req.context.models.Post.find()
-  return res.send(posts)
+
+router.get('/', async (req, res) => { // Get all posts of a category - no restriction
+  Post.find({ category: req.categoryId }).then(posts => {
+    return res.status(200).json(posts)
+  }).catch(error => {
+    console.log(error)
+    return res.status(500).json({ error: 'Server error, probeer het later nog een keer' }) // Generic error message
+  })
 })
      
 router.get('/:postId', async (req, res) => { // curl http://localhost:3000/posts/1

@@ -12,29 +12,7 @@
         md="8"
         lg="6"
       >
-        <v-card
-          class="elevation-6"
-        >
-          <v-list-item>
-            <v-list-item-avatar color="grey" />
-            <v-list-item-content>
-              <v-list-item-title class="headline">
-                {{ category.sport }}
-              </v-list-item-title>
-              <v-list-item-subtitle class="hidden-xs-only">
-                Subforum voor '{{ category.sport }}'
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-img
-            :src="require('../assets/logo.svg')"
-            contain
-            height="200"
-          />
-          <v-card-text>
-            Bekijk en bespreek hier de laatste ontwikkelingen op het gebied van '{{ category.sport }}'.
-          </v-card-text>
-        </v-card>
+        Test
       </v-col>
     </v-row>
   </v-container>
@@ -44,14 +22,29 @@
 export default {
   name: 'Category',
   props: {
-    id: {
+    categoryId: {
       type: String,
       required: true
     }
   },
-  computed: {
-    category () {
-      return this.$store.getters.loadedCategory(this.id)
+  data () {
+    return {
+      posts: null
+    }
+  },
+  created () {
+    this.getPosts()
+  },
+  methods: {
+    getPosts () {
+      return this.$http.get(`/categories/${this.categoryId}/posts`)
+        .then(res => {
+          console.log(res)
+          this.categories = res.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }

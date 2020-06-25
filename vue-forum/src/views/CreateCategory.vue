@@ -24,31 +24,26 @@
           <v-form @submit.prevent="onCreateCategory">
             <v-card-text>
               <v-text-field
-                id="sport"
-                v-model="sport"
+                id="category"
+                v-model="category"
                 prepend-icon="mdi-mail"
                 :rules="[rules.required]"
                 type="text"
-                name="sport"
+                name="category"
                 label="Nieuwe sportcategorie"
                 hint="Dit is hoe de categorie op de homepage weergegeven wordt"
                 required
               />
               <v-text-field
-                id="image-url"
-                v-model="imageUrl"
+                id="imgPath"
+                v-model="imgPath"
                 prepend-icon="mdi-mail"
                 :rules="[rules.required]"
                 type="text"
-                name="imageUrl"
+                name="imgPath"
                 label="Image URL"
                 hint="Voer de link naar de afbeelding toe"
                 required
-              />
-              <v-img
-                :src="imageUrl"
-                contain
-                height="200"
               />
             </v-card-text>
             <v-card-actions>
@@ -73,8 +68,8 @@ export default {
   name: 'CreateCategory',
   data () {
     return {
-      sport: '',
-      imageUrl: '',
+      category: '',
+      imgPath: '',
       rules: {
         required: value => !!value || 'Verplicht.'
       }
@@ -82,7 +77,7 @@ export default {
   },
   computed: {
     formIsValid () {
-      return this.sport !== '' && this.imageUrl !== ''
+      return this.category !== '' && this.imgPath !== ''
     }
   },
   methods: {
@@ -91,11 +86,12 @@ export default {
         return
       }
       const categoryData = {
-        sport: this.sport,
-        imageUrl: this.imageUrl
+        category: this.category,
+        imgPath: this.imgPath
       }
-      this.$store.dispatch('createCategory', categoryData)
-      this.$router.push('/categories')
+      this.$http.post('/categories', categoryData)
+        .then(this.$router.push('/categories'))
+        .catch(error => console.log(error)) // TODO: Logout?
     }
   }
 }
