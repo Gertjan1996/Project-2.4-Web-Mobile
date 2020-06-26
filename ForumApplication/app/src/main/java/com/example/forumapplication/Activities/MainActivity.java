@@ -34,6 +34,8 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
+    public HomeFragment homeFragment;
+    public  Bundle data;
     public static String posts_endpoint = "http://192.168.178.21:4000/categories/5ef4f70491afe34b30c67726/posts";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
-
+        if(savedInstanceState == null) {
+            homeFragment = new HomeFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
+            navigationView.setCheckedItem(R.id.nav_poster);
+        }
 
     }
 
@@ -81,14 +86,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 MyPostsFragment mypostFragment = new MyPostsFragment();
                 mypostFragment.setArguments(getPostData());
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,mypostFragment).commit();
-
-
                 break;
             case R.id.nav_chat:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ChatFragment()).commit();
                 break;
             case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
+                ProfileFragment profileFragment = new ProfileFragment();
+                profileFragment.setArguments(getPostData());
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
+
                 break;
             case R.id.LogOut:
                 logout(null);
@@ -99,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public Bundle getPostData() {
 
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
-        final Bundle data = new Bundle();
+        data = new Bundle();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, posts_endpoint, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
