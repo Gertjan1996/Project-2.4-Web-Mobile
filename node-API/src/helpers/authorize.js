@@ -4,7 +4,7 @@ import expressJwt from 'express-jwt'
 
 function authorize(roles = []) {
   // Roles param kan een enkele rol zijn (b.v. 'User') 
-  // Of een array met meerdere rollen (b.v. ['Admin', 'User'])
+  // Of een array met meerdere rollen (['Admin', 'User'])
   if (typeof roles === 'string') {
     roles = [roles]
   }

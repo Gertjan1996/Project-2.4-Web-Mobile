@@ -1,5 +1,5 @@
 import Router from 'express'
-import post from './post'
+import Post from './post'
 import authorize from '../helpers/authorize'
 import Category from '../models/category'
 
@@ -19,16 +19,16 @@ router.post('/', authorize('Admin'), async (req, res) => { // Post new category 
     category: req.body.category,
     imgPath: req.body.imgPath
   }).then(() => {
-    return res.status(201).json({ message: 'Post aangemaakt' }) // Respond with success message
+    return res.status(201).json({ message: 'Categorie aangemaakt' }) // Respond with success message
   }).catch(error => {
     console.log(error)
     return res.status(500).json({ error: 'Server error, probeer het later nog een keer' }) // Generic error message
   })
 })
 
-router.use('/:categoryId/posts', (req, res, next) => {
+router.use('/:categoryId/posts', (req, res, next) => { // Redirect to posts route
   req.categoryId = req.params.categoryId
   next()
-}, post)
+}, Post)
  
 export default router

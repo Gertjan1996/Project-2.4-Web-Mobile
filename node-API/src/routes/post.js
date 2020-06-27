@@ -5,35 +5,25 @@ import Post from '../models/post'
 const router = Router()
 
 router.get('/', async (req, res) => { // Get all posts of a category - no restriction
-  Post.find({ category: req.categoryId }).then(posts => {
+  Post.find({ category: req.categoryId }).then(posts => { // categoryId is set in routes/category.js
     return res.status(200).json(posts)
   }).catch(error => {
     console.log(error)
     return res.status(500).json({ error: 'Server error, probeer het later nog een keer' }) // Generic error message
   })
 })
-     
-router.get('/:postId', async (req, res) => { // curl http://localhost:3000/posts/1
-  const post = await req.context.models.Post.findById(req.params.postId)
-  return res.send(post)
-})
   
-router.post('/', async (req, res) => { // curl -X POST -H "Content-Type:application/json" http://localhost:3000/posts -d "{\"text\":\"Test\"}"
-  const post = await req.context.models.Post.create({
+router.post('/', authorize(), async (req, res) => { // Post a new post - user level restriction
+  Post.create({
     text: req.body.text,
-    user: req.context.user.id,
-    category: req.context.category.id
-  }).catch((error) => {
-    error.statusCode = 400
-    next(error)
+    user: req.user.sub, // userId is set in helpers/authorize.js
+    category: req.categoryId // categoryId is set in routes/category.js
+  }).then(() => {
+    return res.status(201).json({ message: 'Forumpost aangemaakt' })
+  }).catch(error => {
+    console.log(error)
+    return res.status(500).json({ error: 'Server error, probeer het later nog een keer' })
   })
-  return res.send(post)
 })
-  
-router.delete('/:postId', async (req, res) => { // curl -X DELETE http://localhost:3000/posts/1
-  const post = await req.context.models.Post.findById(req.params.postId)
-  if (post) { await post.remove() }
-  return res.send(post)
-})
- 
+
 export default router
