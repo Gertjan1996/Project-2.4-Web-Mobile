@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.forumapplication.Activities.MainActivity;
+import com.example.forumapplication.Data.post_items;
 import com.example.forumapplication.R;
 
 import org.json.JSONArray;
@@ -38,39 +40,14 @@ public class MyPostsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup)inflater .inflate(R.layout.fragment_my_posts, container, false);
-        posts = (TextView)root.findViewById(R.id.post_text);
+        View root = inflater .inflate(R.layout.fragment_my_posts, container, false);
+        ArrayList<post_items>postItems = new ArrayList<>();
+
+
         getData();
         return root;
     }
-/*
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        String post;
-        Bundle bundle = getArguments();
-        Log.e("Hoi",bundle.toString());
-        if(bundle!=null){
-            post = bundle.getString("post");
-            posts.setText(post);
-        }
-        }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        String post;
-        Bundle bundle = getArguments();
-        Log.e("Hoi", bundle.toString());
-        if (bundle != null) {
-            post = bundle.getString("post");
-            posts.setText(post);
-        }
-
-    }
-
- */
     public void getData(){
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         JsonArrayRequest jsonArrayRequest=  new JsonArrayRequest(Request.Method.GET, posts_endpoint, null, new Response.Listener<JSONArray>() {

@@ -1,7 +1,5 @@
 package com.example.forumapplication.Data;
 
-
-
 public class post_items {
     private String post_title;
     private String post_body;

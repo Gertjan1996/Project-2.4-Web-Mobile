@@ -5,9 +5,11 @@
     android:layout_height="match_parent"
     >
 
-    <TextView
-        android:id="@+id/post_text"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/post_recycleView"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:textSize="30sp" />
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        android:background="@color/gold"
+        />
 </RelativeLayout>

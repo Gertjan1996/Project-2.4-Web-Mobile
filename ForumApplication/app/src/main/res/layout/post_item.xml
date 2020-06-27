@@ -14,13 +14,17 @@
         <TextView
             android:id="@+id/post_title"
             android:layout_width="match_parent"
-            android:layout_height="48dp" />
+            android:layout_height="48dp"
+            android:text="Title"
+            android:textSize="30dp"/>
 
         <TextView
             android:id="@+id/post_body"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_below="@+id/post_title"/>
+            android:layout_below="@+id/post_title"
+            android:text="Body"
+            android:textSize="25dp"/>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

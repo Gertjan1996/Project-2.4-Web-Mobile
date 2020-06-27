@@ -15,9 +15,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.forumapplication.Activities.homeItemAdapter;
 import com.example.forumapplication.R;
 import com.example.forumapplication.Data.home_items;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -27,16 +37,25 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private homeItemAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    public JSONObject jsonObject;
+    public String categorien;
+    public ArrayList<home_items> home_items_list;
+    public home_items items;
+    private static String categorien_End_point = " http://192.168.178.21:4000/categories";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
-        final ArrayList<home_items> home_items_list = new ArrayList<>();
+        home_items_list = new ArrayList<>();
+        /*
         home_items_list.add(new home_items(R.drawable.voetball,"Voetball"));
         home_items_list.add(new home_items(R.drawable.basketball,"Basketball"));
         home_items_list.add(new home_items(R.drawable.veldhockey,"Veldhockey"));
         home_items_list.add(new home_items(R.drawable.swim,"Swimming"));
         home_items_list.add(new home_items(R.drawable.volleyball,"Volleyball"));
+        Log.e(" hi",home_items_list.toString());
+
+*/
         recyclerView =(RecyclerView)view.findViewById(R.id.recycle_view);
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -46,9 +65,69 @@ public class HomeFragment extends Fragment {
         mAdapter.setOnItemClickListener(new homeItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                System.out.println(home_items_list.toString());
+                Log.e("no",home_items_list.toString());
             }
         });
+
+
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, categorien_End_point, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                System.out.println(response.toString());
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        jsonObject= response.getJSONObject(i);
+                        categorien = jsonObject.getString("category");
+                        items = new home_items(R.drawable.ic_post,categorien);
+                        System.out.println(items.toString());
+                        home_items_list.add(items);
+
+                        Log.e("hoi " ,home_items_list.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
+
+        Log.e("Hmm",home_items_list.toString());
+
         return view;
+    }
+    public void getCategorien(){
+        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, categorien_End_point, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                System.out.println(response.toString());
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        jsonObject= response.getJSONObject(i);
+                        categorien = jsonObject.getString("category");
+                        items = new home_items(R.drawable.ic_post,categorien);
+                        System.out.println(items.toString());
+                        home_items_list.add(items);
+                        //home_items_list.add(new);
+                       //Log.e("hoi " ,home_items_list.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
     }
 }
