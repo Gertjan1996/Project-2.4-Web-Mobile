@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store'
-import Home from '../views/Home.vue'
+import Home from '../components/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -17,7 +17,7 @@ const routes = [
   {
     path: '/admin',
     name: 'Admin',
-    component: () => import('../views/Admin.vue'),
+    component: () => import('../components/Admin.vue'),
     meta: {
       auth: ['Admin']
     }
@@ -25,7 +25,7 @@ const routes = [
   {
     path: '/gebruiker',
     name: 'User',
-    component: () => import('../views/User.vue'),
+    component: () => import('../components/User.vue'),
     meta: {
       auth: ['Admin', 'User']
     }
@@ -33,7 +33,7 @@ const routes = [
   {
     path: '/categories',
     name: 'Categorieen',
-    component: () => import('../views/Categories.vue'),
+    component: () => import('../components/Categories.vue'),
     meta: {
       auth: []
     }
@@ -41,7 +41,7 @@ const routes = [
   {
     path: '/categorie/new',
     name: 'CreateCategory',
-    component: () => import('../views/CreateCategory.vue'),
+    component: () => import('../components/CreateCategory.vue'),
     meta: {
       auth: ['Admin']
     }
@@ -50,7 +50,7 @@ const routes = [
     path: '/categories/:categoryId',
     name: 'Category',
     props: true,
-    component: () => import('../views/Category.vue'),
+    component: () => import('../components/Category.vue'),
     meta: {
       auth: []
     }
@@ -58,12 +58,12 @@ const routes = [
   {
     path: '/login',
     name: 'Inloggen',
-    component: () => import('../views/Login.vue')
+    component: () => import('../components/Login.vue')
   },
   {
     path: '/post/new',
     name: 'CreatePost',
-    component: () => import('../views/Post.vue'),
+    component: () => import('../components/Post.vue'),
     meta: {
       auth: ['User', 'Admin']
     }
@@ -71,7 +71,7 @@ const routes = [
   {
     path: '/profiel',
     name: 'Profiel',
-    component: () => import('../views/Profile.vue'),
+    component: () => import('../components/Profile.vue'),
     meta: {
       auth: ['User', 'Admin']
     }
@@ -79,7 +79,7 @@ const routes = [
   {
     path: '/registreren',
     name: 'Registreren',
-    component: () => import('../views/Register.vue')
+    component: () => import('../components/Register.vue')
   },
   {
     path: '*',
