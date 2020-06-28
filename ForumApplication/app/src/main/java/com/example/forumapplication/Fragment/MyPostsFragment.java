@@ -36,7 +36,7 @@ import java.util.zip.Inflater;
 public class MyPostsFragment extends Fragment {
     private TextView posts;
     public  String postdata;
-    public static String posts_endpoint = "http://192.168.178.21:4000/categories/5ef4f70491afe34b30c67726/posts";
+    public static String posts_endpoint = "http://192.168.178.103:4000/categories/5ef4f70491afe34b30c67726/posts";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

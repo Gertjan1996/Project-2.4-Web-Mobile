@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String email;
     String password;
-    public static String signin_endpoint = "http://192.168.178.21:4000/users/authenticate";
+    public static String signin_endpoint = "http://192.168.178.103:4000/users/authenticate";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

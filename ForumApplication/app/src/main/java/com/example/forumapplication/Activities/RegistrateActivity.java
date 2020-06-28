@@ -29,7 +29,7 @@ public class RegistrateActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     ProgressBar progressBar;
     String email,wachtwoord,wachtwoord_confire,username;
-    public static String signup_endpoint = "http://192.168.178.21:4000/users/register";
+    public static String signup_endpoint = "http://192.168.178.103:4000/users/register";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
