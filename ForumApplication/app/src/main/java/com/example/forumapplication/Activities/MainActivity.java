@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getPostData();
+
         Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_poster:
                 //startActivity();
                 MyPostsFragment mypostFragment = new MyPostsFragment();
-                mypostFragment.setArguments(getPostData());
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,mypostFragment).commit();
                 break;
             case R.id.nav_chat:
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_profile:
                 ProfileFragment profileFragment = new ProfileFragment();
-                profileFragment.setArguments(getPostData());
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
 
                 break;

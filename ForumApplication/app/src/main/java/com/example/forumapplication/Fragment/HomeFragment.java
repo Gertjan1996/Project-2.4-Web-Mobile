@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
     private homeItemAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public JSONObject jsonObject;
-    public String categorien;
+    public String catergory;
     public ArrayList<home_items> home_items_list;
     public home_items items;
     private static String categorien_End_point = " http://192.168.178.103:4000/categories";
@@ -74,23 +74,17 @@ public class HomeFragment extends Fragment {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         jsonObject= response.getJSONObject(i);
-                        mAdapter = new homeItemAdapter(home_items_list);
+
                         recyclerView.setLayoutManager(mLayoutManager);
                         recyclerView.setAdapter(mAdapter);
-
-                        categorien = jsonObject.getString("category");
-                        mAdapter.setOnItemClickListener(new homeItemAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(int position) {
-                                Log.e("Categorien",categorien);
-                                if(categorien.equals("Voetbal")){
-                                   getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new VoetballFragment()).commit();
-                               }
-                            }
-                        });
-                        items = new home_items(R.drawable.ic_post,categorien);
+                        
+                        catergory = jsonObject.getString("category");
+                        Log.e("Voorbeeld",catergory);
+                        
+                        items = new home_items(R.drawable.ic_post,catergory);
 
                         home_items_list.add(items);
+                        System.out.println(catergory);
 
 
                         Log.e("Home_item",items.toString());
@@ -108,5 +102,22 @@ public class HomeFragment extends Fragment {
             }
         });
         requestQueue.add(jsonArrayRequest);
+        mAdapter = new homeItemAdapter(home_items_list);
+        mAdapter.setOnItemClickListener(new homeItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Fragment fragment ;
+                System.out.println(catergory);
+                switch (catergory) {
+                    case "Voetbal":fragment = new VoetballFragment();
+                        break;
+                    case "Fitness": fragment = new FitnessFragment();
+                        break;
+                    default:fragment = new Fragment();
+                }
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+
+            }
+        });
     }
 }
