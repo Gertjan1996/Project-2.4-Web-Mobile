@@ -46,6 +46,7 @@ app.use(async (req, res, next) => { // Middleware to add users[1] as sender and 
 })
 app.use('/users', routes.user)
 app.use('/categories', routes.category)
+app.use('/posts', routes.post_all)
 app.get('*', function (req, res, next) { // Error for non-existing routes
   const error = new Error(`${req.ip} probeerde de volgende URL te bereiken: ${req.originalUrl}`)
   error.statusCode = 301

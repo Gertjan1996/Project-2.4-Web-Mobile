@@ -7,6 +7,36 @@
       justify="center"
     >
       <v-col
+        v-for="post in posts"
+        :key="post.id"
+        align="center"
+        cols="12"
+        md="8"
+        lg="6"
+      >
+        <!-- text user category createdAt updatedAt id -->
+        <v-card
+          class="elevation-6"
+        >
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="headline">
+                {{ post.user }}
+              </v-list-item-title>
+              <v-list-item-subtitle class="hidden-xs-only">
+                {{ post.text }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-card-text>
+            Geplaatst om: {{ post.createdAt }}
+            <div v-if="post.createdAt != post.updatedAt">
+              <br>Aangepast: {{ post.updatedAt }}
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col
         align="center"
         cols="12"
         md="8"
@@ -82,7 +112,7 @@ export default {
       return this.$http.get(`/categories/${this.categoryId}/posts`)
         .then(res => {
           console.log(res)
-          this.categories = res.data
+          this.posts = res.data
         })
         .catch(error => {
           console.log(error)
