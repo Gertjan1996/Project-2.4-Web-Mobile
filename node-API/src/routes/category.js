@@ -14,6 +14,15 @@ router.get('/', async (req, res) => { // Get all categories - no restriction
   })
 })
 
+router.get('/:category', async (req, res) => {
+  Category.findOne({ category: req.params.category }).then(category => {
+    return res.status(200).json(category._id)
+  }).catch(error => {
+    console.log(error)
+    return res.status(500).json({ error: 'Server error, probeer het later nog een keer' }) // Generic error message
+  })
+})
+
 router.post('/', authorize('Admin'), async (req, res) => { // Post new category - admin level restriction
   Category.create({
     category: req.body.category,
