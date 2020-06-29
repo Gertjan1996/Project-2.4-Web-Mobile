@@ -3,28 +3,27 @@
     class="fill-height"
   >
     <v-row
+      v-for="post in posts"
+      :key="post.id"
       align="center"
       justify="center"
     >
       <v-col
-        v-for="post in posts"
-        :key="post.id"
         align="center"
         cols="12"
         md="8"
         lg="6"
       >
-        <!-- text user category createdAt updatedAt id -->
         <v-card
           class="elevation-6"
         >
           <v-list-item>
             <v-list-item-content>
               <v-list-item-title class="headline">
-                {{ post.user }}
+                {{ post.text }}
               </v-list-item-title>
               <v-list-item-subtitle class="hidden-xs-only">
-                {{ post.text }}
+                Geschreven door: {{ post.user }}
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -36,6 +35,11 @@
           </v-card-text>
         </v-card>
       </v-col>
+    </v-row>
+    <v-row
+      align="center"
+      justify="center"
+    >
       <v-col
         align="center"
         cols="12"
@@ -123,7 +127,7 @@ export default {
         return
       }
       this.$http.post(`/categories/${this.categoryId}/posts`, { text: this.text })
-        .then(this.$router.push(`/categories/${this.categoryId}`))
+        .then(this.getPosts)
         .catch(error => console.log(error)) // TODO: Logout?
     }
   }

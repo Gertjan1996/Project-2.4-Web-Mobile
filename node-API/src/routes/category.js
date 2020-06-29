@@ -26,7 +26,7 @@ router.post('/', authorize('Admin'), async (req, res) => { // Post new category 
   })
 })
 
-router.use('/:categoryId/posts', (req, res, next) => { // Redirect to posts route
+router.use('/:categoryId/posts', (req, res, next) => { // Redirect to posts route with categoriId as parameeter
   req.categoryId = req.params.categoryId
   next()
 }, Post)

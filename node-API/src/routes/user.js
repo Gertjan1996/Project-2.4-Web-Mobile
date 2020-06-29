@@ -16,12 +16,16 @@ router.get('/', authorize('Admin'), async (req, res) => { // Get all users - adm
 })
   
 router.get('/:userId', authorize(), async (req, res) => { // Get single user - user level restriction for own ID, overall admin level restriction
-  User.findById(req.params.userId).then(user => { // TODO: Add restriction for normal user at only own ID
-    return res.status(200).json(user)
-  }).catch(error => {
-    console.log(error)
-    return res.status(500).json({ error: 'Server error, probeer het later nog een keer' }) // Generic error message
-  })
+  if(req.user.sub !== req.params.userId && req.user.role !== 'Admin') {
+    return res.status(401).json({ message: 'Niet geauthoriseerd' }) // Not admin and not own id -> not authorised
+  } else {
+    User.findById(req.params.userId).then(user => { // TODO: Add restriction for normal user at only own ID
+      return res.status(200).json(user)
+    }).catch(error => {
+      console.log(error)
+      return res.status(500).json({ error: 'Server error, probeer het later nog een keer' }) // Generic error message
+    })
+  }
 })
 
 router.post('/authenticate', async (req, res) => { // Authenticate user - no restriction
