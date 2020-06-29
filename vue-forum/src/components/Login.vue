@@ -87,7 +87,7 @@ export default {
       showPassword: false,
       rules: {
         required: value => !!value || 'Verplicht.',
-        minimum: value => value.length >= 8 || 'Minimaal 8 karakters'
+        minimum: value => value.length >= 6 || 'Minimaal 6 karakters'
       }
     }
   },

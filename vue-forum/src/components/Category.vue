@@ -15,20 +15,12 @@
         lg="6"
       >
         <v-card
-          class="elevation-6"
+          class="elevation-3"
         >
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title class="headline">
-                {{ post.text }}
-              </v-list-item-title>
-              <v-list-item-subtitle class="hidden-xs-only">
-                Geschreven door: {{ post.user }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
           <v-card-text>
-            Geplaatst om: {{ post.createdAt }}
+            <p>{{ post.text }}</p>
+            Geschreven door: <b>{{ post.user }}</b><br>
+            Geplaatst om: <b>{{ post.createdAt }}</b>
             <div v-if="post.createdAt != post.updatedAt">
               <br>Aangepast: {{ post.updatedAt }}
             </div>

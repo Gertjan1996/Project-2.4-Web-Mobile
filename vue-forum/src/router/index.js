@@ -61,14 +61,6 @@ const routes = [
     component: () => import('../components/Login.vue')
   },
   {
-    path: '/post/new',
-    name: 'CreatePost',
-    component: () => import('../components/Post.vue'),
-    meta: {
-      auth: ['User', 'Admin']
-    }
-  },
-  {
     path: '/profiel',
     name: 'Profiel',
     component: () => import('../components/Profile.vue'),

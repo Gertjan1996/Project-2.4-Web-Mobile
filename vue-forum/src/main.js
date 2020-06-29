@@ -5,7 +5,6 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-import DateFilter from './filters/date'
 import Alert from './components/Alert'
 
 Vue.config.productionTip = false
@@ -24,7 +23,6 @@ if (user) {
   store.dispatch('setUser', user)
 }
 
-Vue.filter('date', DateFilter)
 Vue.component('app-alert', Alert)
 
 new Vue({
