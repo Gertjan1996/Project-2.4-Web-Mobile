@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.forumapplication.Fragment.HomeFragment;
 import com.example.forumapplication.R;
 
 import org.json.JSONArray;
@@ -98,7 +99,9 @@ public class PostAanMakenActivity extends AppCompatActivity {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, post_plaatsenUrl, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    Toast.makeText(PostAanMakenActivity.this, "Uw post wordt aangemaakt", Toast.LENGTH_SHORT).show();
                     Log.e("verzonden post", response.toString());
+                    finish();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -110,7 +113,7 @@ public class PostAanMakenActivity extends AppCompatActivity {
                 public Map<String, String> getHeaders() {
                     Map<String, String> header = new HashMap<String, String>();
                     header.put("Content-Type", "application/json");
-                    header.put("Token", "Bearer" + token);
+                    header.put("Authorization", "Bearer " + token);
                     return header;
                 }
 

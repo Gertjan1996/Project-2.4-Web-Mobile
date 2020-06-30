@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -108,10 +109,12 @@ public class HomeFragment extends Fragment {
                 // daarmee maak je een nieuwe main
 
                 System.out.println(home_items_list.get(position));
-                if(home_items_list.get(position).equals("Fitness")){
+                if(home_items_list.get(position).getText().equals("Fitness")){
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FitnessFragment()).commit();
-                }else if(home_items_list.get(position).equals("Voetbal")){
+                }else if(home_items_list.get(position).getText().equals("Voetbal")){
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new VoetballFragment()).commit();
+                }else{
+                    Toast.makeText(getActivity(), "Nog geen fragment gemaakt", Toast.LENGTH_SHORT).show();
                 }
               /*HomeItem tmp = home_items_list.get(position);
                 String url = String.format("http://192.168.178.103:4000/categories/%s/posts", tmp.getID() );
@@ -120,7 +123,7 @@ public class HomeFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,mypostFragment).commit();
 
                  */
-                /*
+/*
                 switch (category) {
                     case "Voetbal":fragment = new VoetballFragment();
                         break;

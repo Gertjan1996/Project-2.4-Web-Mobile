@@ -21,11 +21,16 @@ public class HomeItem {
     public String getText(){
         return mText;
     }
-
+/*
     @Override
     public String toString() {
         return String.format("HomeItem: %s met id %s", mText, this.id);
     }
 
+*/
+    @Override
+    public String toString() {
+        return mText;
+    }
 
 }
