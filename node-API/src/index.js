@@ -36,14 +36,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 app.use(express.json()) // Middleware to transform json body type from request object
 app.use(express.urlencoded({ extended: true })) // Middleware to access payload of an HTTP POST request
 app.use(cors()) // Middleware to allow Cross-origin resource sharing
-app.use(async (req, res, next) => { // Middleware to add users[1] as sender and categories[1] as category - only for test purposes
-  req.context = { // TODO: delete this context, not needed after some updates
-    models, // Middleware to pass the models to all routes
-    user: await models.User.findByLogin('Gertjan'), // Middleware to add user with username 'Gertjan' as sender - only for test purposes
-    category: await models.Category.findOne({ 'text:': 'Ik ben een forumpost 1' }) // Middleware to add categories[1] as category - only for test purposes
-  }
-  next()
-})
 app.use('/users', routes.user)
 app.use('/categories', routes.category)
 app.use('/posts', routes.post_all)
