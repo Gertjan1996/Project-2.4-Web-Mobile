@@ -10,12 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.forumapplication.R;
-import com.example.forumapplication.Data.home_items;
+import com.example.forumapplication.Data.HomeItem;
 
 import java.util.ArrayList;
 
 public  class homeItemAdapter extends RecyclerView.Adapter<homeItemAdapter.ItemViewHolder> {
-    private ArrayList<home_items>mHome_item_list;
+    private ArrayList<HomeItem>mHome_item_list;
     private OnItemClickListener mListener;
     public interface OnItemClickListener{
         void onItemClick(int position);
@@ -44,7 +44,7 @@ public  class homeItemAdapter extends RecyclerView.Adapter<homeItemAdapter.ItemV
             });
         }
     }
-    public homeItemAdapter(ArrayList<home_items>item_list){
+    public homeItemAdapter(ArrayList<HomeItem> item_list){
         mHome_item_list = item_list;
     }
 
@@ -58,7 +58,7 @@ public  class homeItemAdapter extends RecyclerView.Adapter<homeItemAdapter.ItemV
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-            home_items currentItem = mHome_item_list.get(position);
+            HomeItem currentItem = mHome_item_list.get(position);
             holder.mImageView.setImageResource(currentItem.getImageResource());
             holder.mTextView.setText(currentItem.getText());
 

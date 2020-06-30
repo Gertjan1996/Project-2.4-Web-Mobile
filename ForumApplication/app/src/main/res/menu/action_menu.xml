@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<item android:id="Aanmaken"
+        android:icon="@drawable/ic_post"
+        android:title="Post aanmaken"
+        app:showAsAction="ifRoom"
+        android:onClick="PostAanMaken"
+        />
+        -->
+</menu>

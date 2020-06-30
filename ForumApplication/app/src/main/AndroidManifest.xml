@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.HomeActivity"></activity>
-        <activity android:name=".Activities.TestActivity" />
+        <activity android:name=".Activities.PostAanMakenActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

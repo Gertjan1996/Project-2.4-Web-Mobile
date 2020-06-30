@@ -18,19 +18,28 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup)inflater .inflate(R.layout.fragment_my_posts, container, false);
-        posts = (TextView)root.findViewById(R.id.test_text);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_my_posts, container, false);
+        posts = (TextView) root.findViewById(R.id.test_text);
+        Bundle bundle = getArguments();
+        Log.e("Bundle",bundle.toString());
+        if (bundle != null) {
+            String post = bundle.getString("Hoi");
+            posts.setText(post);
+
+        }
         return root;
     }
-
+/*
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String post;
         Bundle bundle = getArguments();
         if (bundle != null) {
-            post = bundle.getString("post");
+            post = bundle.getString("Hoi");
             posts.setText(post);
         }
-    }
+    }*/
+
+
 }

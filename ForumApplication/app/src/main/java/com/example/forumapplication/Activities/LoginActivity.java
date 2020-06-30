@@ -17,8 +17,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.forumapplication.Fragment.HomeFragment;
 import com.example.forumapplication.R;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
@@ -68,8 +70,18 @@ public class LoginActivity extends AppCompatActivity {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, signin_endpoint, obj, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                    try {
                         Log.e("Respsonse:", response.toString());
+                        String token = response.getString("token");
+                        Log.e("Toooooken",token);
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        intent.putExtra("Token",token);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
 
                 }
             }, new Response.ErrorListener() {
@@ -89,5 +101,6 @@ public class LoginActivity extends AppCompatActivity {
     public void Registeren(View view){
         startActivity(new Intent(getApplicationContext(),RegistrateActivity.class));
     }
+
 
 }

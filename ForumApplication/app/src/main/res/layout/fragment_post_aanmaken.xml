@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="79dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="184dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center"
+        android:text="Categorie:"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/postCategorie"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/postCategorie"
+        android:layout_width="264dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="184dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="79dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center"
+        android:text="Post Body"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/postBody"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/postBody"
+        android:layout_width="264dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postCategorie" />
+
+    <Button
+        android:id="@+id/verzendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Versturen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postBody" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

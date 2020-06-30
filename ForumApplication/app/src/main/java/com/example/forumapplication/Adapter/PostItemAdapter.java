@@ -8,13 +8,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.forumapplication.Data.post_items;
+import com.example.forumapplication.Data.PostItem;
 import com.example.forumapplication.R;
 
 import java.util.ArrayList;
 
 public class PostItemAdapter extends RecyclerView.Adapter<PostItemAdapter.PostItemViewHolder> {
-    private ArrayList<post_items>post_itemsArrayList;
+    private ArrayList<PostItem>post_itemsArrayList;
     public static class PostItemViewHolder extends RecyclerView.ViewHolder{
         public TextView mTextView1;
         public TextView mTextView2;
@@ -25,7 +25,7 @@ public class PostItemAdapter extends RecyclerView.Adapter<PostItemAdapter.PostIt
         }
     }
 
-    public PostItemAdapter(ArrayList<post_items>mPost_ItemsArrayList){ post_itemsArrayList=mPost_ItemsArrayList;}
+    public PostItemAdapter(ArrayList<PostItem>mPost_ItemsArrayList){ post_itemsArrayList=mPost_ItemsArrayList;}
     @NonNull
     @Override
     public PostItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,7 +36,7 @@ public class PostItemAdapter extends RecyclerView.Adapter<PostItemAdapter.PostIt
 
     @Override
     public void onBindViewHolder(@NonNull PostItemViewHolder holder, int position) {
-        post_items currentItem =  post_itemsArrayList.get(position);
+        PostItem currentItem =  post_itemsArrayList.get(position);
         holder.mTextView1.setText(currentItem.getPost_title());
         holder.mTextView2.setText(currentItem.getPost_body());
     }

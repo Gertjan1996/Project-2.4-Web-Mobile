@@ -5,16 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,14 +21,13 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.forumapplication.Activities.homeItemAdapter;
 import com.example.forumapplication.R;
-import com.example.forumapplication.Data.home_items;
+import com.example.forumapplication.Data.HomeItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment {
     private DrawerLayout drawerLayout;
@@ -41,9 +35,9 @@ public class HomeFragment extends Fragment {
     private homeItemAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public JSONObject jsonObject;
-    public String catergory;
-    public ArrayList<home_items> home_items_list;
-    public home_items items;
+    public String category;
+    public ArrayList<HomeItem> home_items_list;
+    public HomeItem item;
     private static String categorien_End_point = " http://192.168.178.103:4000/categories";
     @Nullable
     @Override
@@ -78,16 +72,17 @@ public class HomeFragment extends Fragment {
                         recyclerView.setLayoutManager(mLayoutManager);
                         recyclerView.setAdapter(mAdapter);
                         
-                        catergory = jsonObject.getString("category");
-                        Log.e("Voorbeeld",catergory);
+                        category = jsonObject.getString("category");
+                        Log.e("Voorbeeld", category);
                         
-                        items = new home_items(R.drawable.ic_post,catergory);
+                        item = new HomeItem(R.drawable.ic_post, category); //HomeItem
+                        item.setId(jsonObject.getString("id"));
 
-                        home_items_list.add(items);
-                        System.out.println(catergory);
+                        home_items_list.add(item);
+                        System.out.println(category);
 
 
-                        Log.e("Home_item",items.toString());
+                        Log.e("Home_item", item.toString());
                         Log.e("list",home_items_list.toString());
 
                     } catch (JSONException e) {
@@ -107,8 +102,26 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 Fragment fragment ;
-                System.out.println(catergory);
-                switch (catergory) {
+                //ArrayList<HomeItem> temp = new ArrayList<>();
+                // call naar de backend met de id van de categorie waar je op hebt geklikt
+                // vervolgens vul je de arraylist met de reponse
+                // daarmee maak je een nieuwe main
+
+                System.out.println(home_items_list.get(position));
+                if(home_items_list.get(position).equals("Fitness")){
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FitnessFragment()).commit();
+                }else if(home_items_list.get(position).equals("Voetbal")){
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new VoetballFragment()).commit();
+                }
+              /*HomeItem tmp = home_items_list.get(position);
+                String url = String.format("http://192.168.178.103:4000/categories/%s/posts", tmp.getID() );
+                MyPostsFragment mypostFragment = new MyPostsFragment();
+                mypostFragment.getPostData(url);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,mypostFragment).commit();
+
+                 */
+                /*
+                switch (category) {
                     case "Voetbal":fragment = new VoetballFragment();
                         break;
                     case "Fitness": fragment = new FitnessFragment();
@@ -116,6 +129,7 @@ public class HomeFragment extends Fragment {
                     default:fragment = new Fragment();
                 }
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+             */
 
             }
         });
